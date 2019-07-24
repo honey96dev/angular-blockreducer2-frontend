@@ -1,0 +1,27 @@
+<div class="app-header white box-shadow">
+  <div class="navbar navbar-toggleable-sm flex-row align-items-center">
+    <div class="collapse navbar-collapse" id="collapse">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a id="pageTitle" class="nav-link" data-toggle="dropdown">
+            <span>{{pageTitle}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ul class="nav navbar-nav ml-auto flex-row">
+        <li class="nav-item">
+          <!--<button type="submit" class="btn btn-fw primary" [disabled]="loading">{{strings.refresh}}</button>-->
+        </li>
+      </ul>
+    </form>
+
+    <!-- / navbar right -->
+  </div>
+</div>
+<div ui-view="" class="app-body" id="view">
+  <div class="padding">
+
+  </div>
+</div>

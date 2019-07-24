@@ -1,0 +1,23 @@
+$mainTextColor: rgba(255, 255, 255, 0.87);
+
+.invalid-feedback {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  color: #ff0000;
+}
+
+.form-control.parsley-error {
+  border-color: #ff0000;
+}
+
+.app-header {
+  position: unset !important;
+}
+
+.app-header ~ .app-body {
+  padding-top: 0 !important;
+}
+
+#pageTitle {
+  font-size: 1.2rem;
+}

@@ -1,0 +1,76 @@
+<div class="p-a-md box-color r box-shadow-z1 text-color m-a">
+  <div class="m-b text-md">
+    {{strings.signUpToYourAccount}}
+  </div>
+  <form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="arrow.show" class="box-color pos-rlt" [ngClass]="arrow.type">
+      <span class="top b-primary"></span>
+      <div class="box-body">{{arrow.message}}</div>
+    </div>
+    <div class="md-form-group float-label">
+      <input type="text" class="md-input" formControlName="firstName"
+             [ngClass]="{ 'form-control parsley-error': submitted && f.firstName.errors }">
+      <label>{{strings.firstName}}</label>
+      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+        <div *ngIf="f.firstName.errors.required">{{strings.thisFieldIsRequired}}</div>
+      </div>
+    </div>
+    <div class="md-form-group float-label">
+      <input type="text" class="md-input" formControlName="lastName"
+             [ngClass]="{ 'form-control parsley-error': submitted && f.lastName.errors }">
+      <label>{{strings.lastName}}</label>
+      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+        <div *ngIf="f.lastName.errors.required">{{strings.thisFieldIsRequired}}</div>
+      </div>
+    </div>
+    <div class="md-form-group float-label">
+      <input type="email" class="md-input" formControlName="email"
+             [ngClass]="{ 'form-control parsley-error': submitted && f.email.errors }">
+      <label>{{strings.email}}</label>
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">{{strings.thisFieldIsRequired}}</div>
+      </div>
+    </div>
+    <div class="md-form-group float-label">
+      <input type="text" class="md-input" formControlName="username"
+             [ngClass]="{ 'form-control parsley-error': submitted && f.username.errors }">
+      <label>{{strings.username}}</label>
+      <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+        <div *ngIf="f.username.errors.required">{{strings.thisFieldIsRequired}}</div>
+      </div>
+    </div>
+    <div class="md-form-group float-label">
+      <input type="password" class="md-input" formControlName="password"
+             [ngClass]="{ 'form-control parsley-error': submitted && f.password.errors }">
+      <label>{{strings.password}}</label>
+      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+        <div *ngIf="f.password.errors.required">{{strings.thisFieldIsRequired}}</div>
+      </div>
+    </div>
+    <div class="md-form-group float-label">
+      <input type="text" class="md-input" formControlName="invitationCode"
+             [ngClass]="{ 'form-control parsley-error': submitted && f.invitationCode.errors }">
+      <label>{{strings.invitationCode}}</label>
+      <div *ngIf="submitted && f.invitationCode.errors" class="invalid-feedback">
+        <div *ngIf="f.invitationCode.errors.required">{{strings.thisFieldIsRequired}}</div>
+      </div>
+    </div>
+    <div class="m-b-md">
+      <label class="md-check">
+        <!--<input type="checkbox" class="has-value" formControlName="acceptTerm" ><i class="primary"></i> Agree the <a href="">terms and policy</a>-->
+        <input type="checkbox" class="has-value" formControlName="acceptTerm" ><i class="primary"></i> {{strings.agreeTheTermsAndPolicy}}
+      </label>
+      <div *ngIf="submitted && f.acceptTerm.errors" class="invalid-feedback">
+        <!--<div *ngIf="f.acceptTerm.errors.required">{{strings.thisFieldIsRequired}}</div>-->
+        <div *ngIf="f.acceptTerm.errors.checkForce">{{strings.pleaseAcceptThis}}</div>
+      </div>
+    </div>
+    <button type="submit" class="btn primary btn-block p-x-md" [disabled]="loading">{{strings.signUp}}</button>
+  </form>
+</div>
+
+<div class="p-v-lg text-center">
+  <div>{{strings.alreadyHaveAnAccount}} <a routerLink="/auth/sign-in" routerLinkActive="active"
+                                         class="text-primary _600">{{strings.signIn}}</a>
+  </div>
+</div>
