@@ -39,7 +39,7 @@
 
     var setting = 'jqStorage-'+app.name+'-Setting',
         storage = $.localStorage;
-    
+
     if( storage.isEmpty(setting) ){
         storage.set(setting, app.setting);
     }else{
@@ -65,7 +65,7 @@
 
       $('[data-target="folded"] input').prop('checked', app.setting.folded);
       $('[data-target="boxed"] input').prop('checked', app.setting.boxed);
-      
+
     }
 
     // click to switch
@@ -100,7 +100,7 @@
         $('body').removeClass('modal-open').find('.modal-backdrop').remove();
         $('.navbar-toggleable-sm').collapse('hide');
     });
-    
+
     init();
     // setTheme();
 

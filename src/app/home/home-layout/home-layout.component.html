@@ -4,28 +4,20 @@
     <div class="navbar no-radius">
       <!-- brand -->
       <a class="navbar-brand">
-        <div ui-include="'assets/images/logo.svg'"></div>
         <img src="assets/images/logo.png" alt="." class="hide">
-        <span class="hidden-folded inline">Block Reducer</span>
+        <span class="hidden-folded inline">{{strings.siteName}}</span>
       </a>
       <!-- / brand -->
     </div>
     <div class="hide-scroll" data-flex>
       <nav class="scroll nav-light">
-
         <ul class="nav" ui-nav>
-          <li class="nav-header hidden-folded">
-            <small class="text-muted">Main</small>
-          </li>
-
           <li>
             <a routerLink="/app">
               <span class="nav-icon">
-                <i class="material-icons">&#xe3fc;
-                  <span ui-include="'assets/images/i_0.svg'"></span>
-                </i>
+                <i class="fa fa-dashboard"></i>
               </span>
-              <span class="nav-text">Dashboard</span>
+              <span class="nav-text">{{strings.dashboard}}</span>
             </a>
           </li>
 
@@ -34,35 +26,35 @@
               <span class="nav-caret">
                 <i class="fa fa-caret-down"></i>
               </span>
-              <!--<span class="nav-label">-->
-                <!--<b class="label rounded label-sm primary">5</b>-->
-              <!--</span>-->
               <span class="nav-icon">
-                <i class="material-icons">&#xe5c3;
-                  <span ui-include="'assets/images/i_1.svg'"></span>
-                </i>
+                <i class="fa fa-list-alt"></i>
               </span>
-              <span class="nav-text">General</span>
+              <span class="nav-text">{{strings.general}}</span>
             </a>
             <ul class="nav-sub">
               <li>
                 <a routerLink="/app/general/price-chart">
-                  <span class="nav-text">Price chart</span>
+                  <span class="nav-text">{{strings.priceChart}}</span>
                 </a>
               </li>
               <li>
                 <a routerLink="/app/general/volume-chart">
-                  <span class="nav-text">Volume chart</span>
+                  <span class="nav-text">{{strings.volumeChart}}</span>
                 </a>
               </li>
               <li>
                 <a routerLink="/app/general/vwap-chart">
-                  <span class="nav-text">VWAP chart</span>
+                  <span class="nav-text">{{strings.vwapChart}}</span>
                 </a>
               </li>
               <li>
                 <a routerLink="/app/general/trades-chart">
-                  <span class="nav-text">Current trade chart</span>
+                  <span class="nav-text">{{strings.currentTradeChart}}</span>
+                </a>
+              </li>
+              <li>
+                <a routerLink="/app/general/ohlc-chart">
+                  <span class="nav-text">{{strings.currentTradeChart}}</span>
                 </a>
               </li>
             </ul>
@@ -74,235 +66,32 @@
                 <i class="fa fa-caret-down"></i>
               </span>
               <span class="nav-icon">
-                <i class="material-icons">&#xe8f0;
-                  <span ui-include="'assets/images/i_2.svg'"></span>
-                </i>
+                <i class="fa fa-eye"></i>
               </span>
-              <span class="nav-text">Layouts</span>
+              <span class="nav-text">{{strings.hiddenOrder}}</span>
             </a>
             <ul class="nav-sub">
               <li>
-                <a href="headers.html">
-                  <span class="nav-text">Header</span>
+                <a routerLink="/app/hidden-order/daily-chart">
+                  <span class="nav-text">{{strings.dailyChart}}</span>
                 </a>
               </li>
               <li>
-                <a href="asides.html">
-                  <span class="nav-text">Aside</span>
-                </a>
-              </li>
-              <li>
-                <a href="footers.html">
-                  <span class="nav-text">Footer</span>
+                <a routerLink="/app/hidden-order/yearly-chart">
+                  <span class="nav-text">{{strings.yearlyChart}}</span>
                 </a>
               </li>
             </ul>
           </li>
 
           <li>
-            <a routerLink="/app">
+            <a routerLink="/app/volatility-chart">
               <span class="nav-icon">
-                <i class="material-icons">&#xe8d2;
-                  <span ui-include="'assets/images/i_3.svg'"></span>
+                <i class="fa fa-cloud">
                 </i>
               </span>
-              <span class="nav-text">Widgets</span>
+              <span class="nav-text">{{strings.volatilityChart}}</span>
             </a>
-          </li>
-
-          <li class="nav-header hidden-folded">
-            <small class="text-muted">Components</small>
-          </li>
-
-          <li>
-            <a>
-              <span class="nav-caret">
-                <i class="fa fa-caret-down"></i>
-              </span>
-              <span class="nav-label">
-                <b class="label label-sm accent">8</b>
-              </span>
-              <span class="nav-icon">
-                <i class="material-icons">&#xe429;
-                  <span ui-include="'assets/images/i_4.svg'"></span>
-                </i>
-              </span>
-              <span class="nav-text">UI kit</span>
-            </a>
-            <ul class="nav-sub nav-mega nav-mega-3">
-              <li>
-                <a href="arrow.html">
-                  <span class="nav-text">Arrow</span>
-                </a>
-              </li>
-              <li>
-                <a href="box.html">
-                  <span class="nav-text">Box</span>
-                </a>
-              </li>
-              <li>
-                <a href="button.html">
-                  <span class="nav-text">Button</span>
-                </a>
-              </li>
-              <li>
-                <a href="color.html">
-                  <span class="nav-text">Color</span>
-                </a>
-              </li>
-              <li>
-                <a href="dropdown.html">
-                  <span class="nav-text">Dropdown</span>
-                </a>
-              </li>
-              <li>
-                <a href="grid.html">
-                  <span class="nav-text">Grid</span>
-                </a>
-              </li>
-              <li>
-                <a href="icon.html">
-                  <span class="nav-text">Icon</span>
-                </a>
-              </li>
-              <li>
-                <a href="label.html">
-                  <span class="nav-text">Label</span>
-                </a>
-              </li>
-              <li>
-                <a href="list.html">
-                  <span class="nav-text">List Group</span>
-                </a>
-              </li>
-              <li>
-                <a href="modal.html">
-                  <span class="nav-text">Modal</span>
-                </a>
-              </li>
-              <li>
-                <a href="nav.html">
-                  <span class="nav-text">Nav</span>
-                </a>
-              </li>
-              <li>
-                <a href="progress.html">
-                  <span class="nav-text">Progress</span>
-                </a>
-              </li>
-              <li>
-                <a href="social.html">
-                  <span class="nav-text">Social</span>
-                </a>
-              </li>
-              <li>
-                <a href="sortable.html">
-                  <span class="nav-text">Sortable</span>
-                </a>
-              </li>
-              <li>
-                <a href="streamline.html">
-                  <span class="nav-text">Streamline</span>
-                </a>
-              </li>
-              <li>
-                <a href="timeline.html">
-                  <span class="nav-text">Timeline</span>
-                </a>
-              </li>
-              <li>
-                <a href="map.vector.html">
-                  <span class="nav-text">Vector Map</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <li>
-            <a>
-              <span class="nav-caret">
-                <i class="fa fa-caret-down"></i>
-              </span>
-              <span class="nav-label"><b class="label no-bg">9</b></span>
-              <span class="nav-icon">
-                <i class="material-icons">&#xe3e8;
-                  <span ui-include="'assets/images/i_5.svg'"></span>
-                </i>
-              </span>
-              <span class="nav-text">Pages</span>
-            </a>
-            <ul class="nav-sub nav-mega">
-              <li>
-                <a href="profile.html">
-                  <span class="nav-text">Profile</span>
-                </a>
-              </li>
-              <li>
-                <a href="setting.html">
-                  <span class="nav-text">Setting</span>
-                </a>
-              </li>
-              <li>
-                <a href="search.html">
-                  <span class="nav-text">Search</span>
-                </a>
-              </li>
-              <li>
-                <a href="faq.html">
-                  <span class="nav-text">FAQ</span>
-                </a>
-              </li>
-              <li>
-                <a href="gallery.html">
-                  <span class="nav-text">Gallery</span>
-                </a>
-              </li>
-              <li>
-                <a href="invoice.html">
-                  <span class="nav-text">Invoice</span>
-                </a>
-              </li>
-              <li>
-                <a href="price.html">
-                  <span class="nav-text">Price</span>
-                </a>
-              </li>
-              <li>
-                <a href="blank.html">
-                  <span class="nav-text">Blank</span>
-                </a>
-              </li>
-              <li>
-                <a href="signin.html">
-                  <span class="nav-text">Sign In</span>
-                </a>
-              </li>
-              <li>
-                <a href="signup.html">
-                  <span class="nav-text">Sign Up</span>
-                </a>
-              </li>
-              <li>
-                <a href="forgot-password.html">
-                  <span class="nav-text">Forgot Password</span>
-                </a>
-              </li>
-              <li>
-                <a href="lockme.html">
-                  <span class="nav-text">Lockme Screen</span>
-                </a>
-              </li>
-              <li>
-                <a href="404.html">
-                  <span class="nav-text">Error 404</span>
-                </a>
-              </li>
-              <li>
-                <a href="505.html">
-                  <span class="nav-text">Error 505</span>
-                </a>
-              </li>
-            </ul>
           </li>
 
           <li>
@@ -311,54 +100,32 @@
                 <i class="fa fa-caret-down"></i>
               </span>
               <span class="nav-icon">
-                <i class="material-icons">&#xe39e;
-                  <span ui-include="'assets/images/i_6.svg'"></span>
-                </i>
+                <i class="fa fa-table"></i>
               </span>
-              <span class="nav-text">Form</span>
+              <span class="nav-text">{{strings.marketSentiment}}</span>
             </a>
             <ul class="nav-sub">
               <li>
-                <a href="form.layout.html">
-                  <span class="nav-text">Form Layout</span>
+                <a routerLink="/app/market-sentiment/linear">
+                  <span class="nav-text">{{strings.linearChart}}</span>
                 </a>
               </li>
               <li>
-                <a href="form.element.html">
-                  <span class="nav-text">Form Element</span>
-                </a>
-              </li>
-              <li>
-                <a href="form.validation.html">
-                  <span class="nav-text">Form Validation</span>
-                </a>
-              </li>
-              <li>
-                <a href="form.select.html">
-                  <span class="nav-text">Select</span>
-                </a>
-              </li>
-              <li>
-                <a href="form.editor.html">
-                  <span class="nav-text">Editor</span>
-                </a>
-              </li>
-              <li>
-                <a href="form.picker.html">
-                  <span class="nav-text">Picker</span>
-                </a>
-              </li>
-              <li>
-                <a href="form.wizard.html">
-                  <span class="nav-text">Wizard</span>
-                </a>
-              </li>
-              <li>
-                <a href="form.dropzone.html" class="no-ajax">
-                  <span class="nav-text">File Upload</span>
+                <a routerLink="/app/market-sentiment/logarithmic">
+                  <span class="nav-text">{{strings.logarithmicChart}}</span>
                 </a>
               </li>
             </ul>
+          </li>
+
+          <li>
+            <a routerLink="/app/exchange-info">
+              <span class="nav-icon">
+                <i class="fa fa-exchange">
+                </i>
+              </span>
+              <span class="nav-text">{{strings.exchangeInformation}}</span>
+            </a>
           </li>
 
           <li>
@@ -367,106 +134,46 @@
                 <i class="fa fa-caret-down"></i>
               </span>
               <span class="nav-icon">
-                <i class="material-icons">&#xe896;
-                  <span ui-include="'assets/images/i_7.svg'"></span>
-                </i>
+                <i class="fa fa-desktop"></i>
               </span>
-              <span class="nav-text">Tables</span>
+              <span class="nav-text">{{strings.deribitInformation}}</span>
             </a>
             <ul class="nav-sub">
               <li>
-                <a href="static.html">
-                  <span class="nav-text">Static table</span>
+                <a routerLink="/app/deribit/option1">
+                  <span class="nav-text">{{strings.option1}}</span>
                 </a>
               </li>
               <li>
-                <a href="datatable.html">
-                  <span class="nav-text">Datatable</span>
+                <a routerLink="/app/deribit/option2">
+                  <span class="nav-text">{{strings.option2}}</span>
                 </a>
               </li>
               <li>
-                <a href="footable.html">
-                  <span class="nav-text">Footable</span>
+                <a routerLink="/app/deribit/option3">
+                  <span class="nav-text">{{strings.option3}}</span>
                 </a>
               </li>
             </ul>
           </li>
+
           <li>
-            <a>
-              <span class="nav-caret">
-                <i class="fa fa-caret-down"></i>
-              </span>
-              <span class="nav-label hidden-folded">
-                <b class="label label-sm info">N</b>
-              </span>
+            <a routerLink="/app/settings">
               <span class="nav-icon">
-                <i class="material-icons">&#xe1b8;
-                  <span ui-include="'assets/images/i_8.svg'"></span>
+                <i class="fa fa-spin">
                 </i>
               </span>
-              <span class="nav-text">Charts</span>
+              <span class="nav-text">{{strings.settings}}</span>
             </a>
-            <ul class="nav-sub">
-              <li>
-                <a href="chart.html">
-                  <span class="nav-text">Chart</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="nav-caret">
-                    <i class="fa fa-caret-down"></i>
-                  </span>
-                  <span class="nav-text">Echarts</span>
-                </a>
-                <ul class="nav-sub">
-                  <li>
-                    <a href="echarts-line.html">
-                      <span class="nav-text">line</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="echarts-bar.html">
-                      <span class="nav-text">Bar</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="echarts-pie.html">
-                      <span class="nav-text">Pie</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="echarts-scatter.html">
-                      <span class="nav-text">Scatter</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="echarts-radar-chord.html">
-                      <span class="nav-text">Radar &amp; Chord</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="echarts-gauge-funnel.html">
-                      <span class="nav-text">Gauges &amp; Funnel</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="echarts-map.html">
-                      <span class="nav-text">Map</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
           </li>
 
-          <li class="nav-header hidden-folded">
-            <small class="text-muted">Help</small>
-          </li>
-
-          <li class="hidden-folded">
-            <a href="docs.html">
-              <span class="nav-text">Documents</span>
+          <li>
+            <a (click)="onSignOut()">
+              <span class="nav-icon">
+                <i class="fa fa-dashboard">
+                </i>
+              </span>
+              <span class="nav-text">{{strings.signOut}}</span>
             </a>
           </li>
 
@@ -488,75 +195,16 @@
     </div>
   </div>
 </div>
-<!-- / -->
 
-<!-- content -->
 <div id="content" class="app-content box-shadow-z0" role="main">
   <router-outlet></router-outlet>
-  <div class="app-footer">
-    <div class="p-2 text-xs">
-      <div class="pull-right text-muted py-1">
-        &copy; Copyright <strong>blockreducer.com</strong> <span
-        class="hidden-xs-down">- Built with Crytocurrency</span>
-        <!--<a ui-scroll-to="content"><i class="fa fa-long-arrow-up p-x-sm"></i></a>-->
-      </div>
-    </div>
-  </div>
+<!--  <div class="app-footer">-->
+<!--    <div class="p-2 text-xs">-->
+<!--      <div class="pull-right text-muted py-1">-->
+<!--        &copy; Copyright <strong>blockreducer.com</strong> <span-->
+<!--        class="hidden-xs-down">- {{strings.builtWithCryptocurrency}}</span>-->
+<!--&lt;!&ndash;        <a ui-scroll-to="content"><i class="fa fa-long-arrow-up p-x-sm"></i></a>&ndash;&gt;-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>
-
-<!--<div id="content" class="app-content box-shadow-z0" role="main">-->
-  <!--<div class="app-header white box-shadow">-->
-    <!--<div class="navbar navbar-toggleable-sm flex-row align-items-center">-->
-      <!--<div class="collapse navbar-collapse" id="collapse">-->
-        <!--<ul class="nav navbar-nav mr-auto">-->
-          <!--<li class="nav-item dropdown">-->
-            <!--<a id="pageTitle" class="nav-link" data-toggle="dropdown">-->
-              <!--<span>{{pageTitle}}</span>-->
-            <!--</a>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</div>-->
-      <!--<form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">-->
-        <!--<ul class="nav navbar-nav ml-auto flex-row">-->
-          <!--<li class="nav-item">-->
-            <!--<div class="form-group">-->
-              <!--<input type='text' class="form-control" ui-jp="datetimepicker" ui-options="{-->
-              <!--icons: {-->
-                <!--time: 'fa fa-clock-o',-->
-                <!--date: 'fa fa-calendar',-->
-                <!--up: 'fa fa-chevron-up',-->
-                <!--down: 'fa fa-chevron-down',-->
-                <!--previous: 'fa fa-chevron-left',-->
-                <!--next: 'fa fa-chevron-right',-->
-                <!--today: 'fa fa-screenshot',-->
-                <!--clear: 'fa fa-trash',-->
-                <!--close: 'fa fa-remove'-->
-              <!--}-->
-            <!--}">-->
-            <!--</div>-->
-          <!--</li>-->
-          <!--<li class="nav-item">-->
-            <!--<button type="submit" class="btn btn-fw primary" [disabled]="loading">{{strings.refresh}}</button>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</form>-->
-
-      <!--&lt;!&ndash; / navbar right &ndash;&gt;-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div class="app-footer">-->
-    <!--<div class="p-2 text-xs">-->
-      <!--<div class="pull-right text-muted py-1">-->
-        <!--&copy; Copyright <strong>blockreducer.com</strong> <span-->
-        <!--class="hidden-xs-down">- Built with Crytocurrency</span>-->
-        <!--&lt;!&ndash;<a ui-scroll-to="content"><i class="fa fa-long-arrow-up p-x-sm"></i></a>&ndash;&gt;-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div ui-view="" class="app-body" id="view">-->
-    <!--<div class="padding">-->
-
-    <!--</div>-->
-  <!--</div>-->
-  <!--<router-outlet></router-outlet>-->
-<!--</div>-->

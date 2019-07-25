@@ -16,6 +16,9 @@
         <div *ngIf="f.email.errors.email">{{strings.yourEmailIsInvalid}}</div>
       </div>
     </div>
+<!--    <mat-form-field>-->
+<!--      <input matInput placeholder="{{strings.email}}" formControlName="email">-->
+<!--    </mat-form-field>-->
     <div class="md-form-group float-label">
       <input type="password" class="md-input" formControlName="password"
              [ngClass]="{'form-control parsley-error': submitted && f.password.errors }">

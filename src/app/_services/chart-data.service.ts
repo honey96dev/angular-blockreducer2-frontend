@@ -11,8 +11,8 @@ export class ChartDataService {
   constructor(private http: HttpClient) {
   }
 
-  price() {
-    return this.http.post<any>(`${environment.apiUrl}${apis.auth.signIn}`, {})
+  price(params) {
+    return this.http.post<any>(`${environment.apiUrl}${apis.general.price}`, params)
       .pipe(map(res => {
         return res;
       }));
