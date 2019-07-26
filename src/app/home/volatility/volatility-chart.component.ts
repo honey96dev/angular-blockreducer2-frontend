@@ -3,15 +3,15 @@ import {DatePipe} from "@angular/common";
 import strings from "@core/strings";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
-import {GeneralChartDataService} from "@app/_services/general-chart-data.service";
 import {first} from "rxjs/operators";
+import {VolatilityChartDataService} from "@app/_services/volatility-chart-data.service";
 
 @Component({
-  selector: 'home-price-chart',
-  templateUrl: './price-chart.component.html',
-  styleUrls: ['./price-chart.component.scss']
+  selector: 'home-volatility-chart',
+  templateUrl: './volatility-chart.component.html',
+  styleUrls: ['./volatility-chart.component.scss']
 })
-export class PriceChartComponent implements OnInit {
+export class VolatilityChartComponent implements OnInit {
   strings = strings;
   form: FormGroup;
   arrow = {
@@ -22,27 +22,40 @@ export class PriceChartComponent implements OnInit {
   loading = false;
   submitted = false;
   error = '';
-  priceData = {
+
+  binSizes = [
+    {label: '1m', value: '1m'},
+    {label: '5m', value: '5m'},
+    {label: '1h', value: '1h'},
+  ];
+
+  openData = {
     x: [],
     y: [],
+    name: 'Open',
+    yaxis: 'y1',
     type: 'scatter',
-    // mode: 'lines+points',
-    // marker: {color: 'red'}
   };
-  graph = {
-    data: [this.priceData],
-    // data: [
-    //   { x: this.priceData.x, y: this.priceData.y, type: 'scatter', mode: 'lines+points', marker: {color: 'red'} },
-    // ],
+  highPassData = {
+    x: [],
+    y: [],
+    name: 'Residual Index',
+    yaxis: 'y2',
+    type: 'scatter',
+  };
+  lowPassData = {
+    x: [],
+    y: [],
+    name: 'Volatility Index',
+    yaxis: 'y2',
+    type: 'scatter',
+  };
+  highPassGraph = {
+    data: [this.openData, this.highPassData],
     layout: {
-      height: 850,
+      height: 700,
       autosize: true,
-      // margin: {
-      //   l: 40,
-      //   r: 40,
-      //   t: 30,
-      //   b: 30,
-      // },
+      showlegend: true,
       xaxis: {
         autorange: true,
         rangeslider: {},
@@ -50,25 +63,58 @@ export class PriceChartComponent implements OnInit {
         type: 'date',
       },
       yaxis: {
-        title: 'Price',
+        title: 'Open',
         autorange: true,
-        type: 'linear',
       },
+      yaxis2: {
+        title: 'Residual Index',
+        // titlefont: {color: 'rgb(148, 103, 189)'},
+        // tickfont: {color: 'rgb(148, 103, 189)'},
+        overlaying: 'y',
+        side: 'right',
+      }
+    },
+  };
+  lowPassGraph = {
+    data: [this.openData, this.lowPassData],
+    layout: {
+      height: 700,
+      autosize: true,
+      showlegend: true,
+      xaxis: {
+        autorange: true,
+        rangeslider: {},
+        title: 'Date',
+        type: 'date',
+      },
+      yaxis: {
+        title: 'Open',
+        autorange: true,
+      },
+      yaxis2: {
+        title: 'Volatility Index',
+        // titlefont: {color: 'rgb(148, 103, 189)'},
+        // tickfont: {color: 'rgb(148, 103, 189)'},
+        overlaying: 'y',
+        side: 'right',
+      }
     },
   };
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
-                     private chartDataService: GeneralChartDataService) {
-    titleService.setTitle(`${strings.priceChart}-${strings.siteName}`);
+                     private chartDataService: VolatilityChartDataService) {
+    titleService.setTitle(`${strings.volatilityChart}-${strings.siteName}`);
   }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      binSize: [''],
       startTime: [''],
       endTime: [''],
       timezone: ['', Validators.required],
     });
+    this.f.binSize.setValue('5m');
     this.f.timezone.setValue(0);
     this.onSubmit();
   }
@@ -85,17 +131,20 @@ export class PriceChartComponent implements OnInit {
     this.arrow.show = false;
 
     const symbol = 'XBTUSD';
-    const binSize = '5m';
+    const binSize = this.f.binSize.value;
     const datePipe = new DatePipe('en');
     const startTime = datePipe.transform(this.f.startTime.value, 'yyyy-MM-dd');
     const endTime = datePipe.transform(this.f.endTime.value, 'yyyy-MM-dd');
     const timezone = this.f.timezone.value;
 
-    this.priceData.x = [];
-    this.priceData.y = [];
-    this.chartDataService.price({
+    this.openData.x = [];
+    this.openData.y = [];
+    this.highPassData.x = [];
+    this.highPassData.y = [];
+    this.lowPassData.x = [];
+    this.lowPassData.y = [];
+    this.chartDataService.real(binSize, {
       symbol,
-      binSize,
       startTime,
       endTime,
       timezone,
@@ -116,8 +165,12 @@ export class PriceChartComponent implements OnInit {
             };
           } else {
             for (let item of data) {
-              this.priceData.x.push(item['timestamp']);
-              this.priceData.y.push(item['open']);
+              this.openData.x.push(item['timestamp']);
+              this.openData.y.push(item['open']);
+              this.highPassData.x.push(item['timestamp']);
+              this.highPassData.y.push(item['highPass']);
+              this.lowPassData.x.push(item['timestamp']);
+              this.lowPassData.y.push(item['lowPass']);
             }
           }
         } else {
@@ -135,8 +188,6 @@ export class PriceChartComponent implements OnInit {
           type: 'danger',
           message: strings.unkbownServerError,
         };
-        this.priceData.x = [];
-        this.priceData.y = [];
       });
   }
 }

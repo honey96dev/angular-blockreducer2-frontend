@@ -5,10 +5,17 @@ import {AuthLayoutComponent} from './auth/auth-layout/auth-layout.component';
 import {SigninComponent} from './auth/signin/signin.component';
 import {SignupComponent} from './auth/signup/signup.component';
 import {HomeLayoutComponent} from './home/home-layout/home-layout.component';
-import {HomeModule} from "@app/home/home.module";
 import {DashboardComponent} from './home/dashboard/dashboard.component';
 import {PriceChartComponent} from './home/general/price-chart/price-chart.component';
 import {VolumeChartComponent} from './home/general/volume-chart/volume-chart.component';
+import {OhlcChartComponent} from "@app/home/general/ohlc-chart/ohlc-chart.component";
+import {MarketLinearChartComponent} from "@app/home/market-sentiment/linear/market-linear-chart.component";
+import {MarketLogarithmicChartComponent} from "@app/home/market-sentiment/logarithmic/market-logarithmic-chart.component";
+import {ExchangeInfoComponent} from "@app/home/exchange-info/exchange-info.component";
+import {VolatilityChartComponent} from "@app/home/volatility/volatility-chart.component";
+import {DeribitOption1ChartComponent} from "@app/home/deribit/option1-chart/deribit-option1-chart.component";
+import {DeribitOption2ChartComponent} from "@app/home/deribit/option2-chart/deribit-option2-chart.component";
+import {DeribitOption3ChartComponent} from "@app/home/deribit/option3-chart/deribit-option3-chart.component";
 
 const routes: Routes = [
   {
@@ -30,6 +37,14 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},
       {path: 'general/price-chart', component: PriceChartComponent, pathMatch: 'full'},
       {path: 'general/volume-chart', component: VolumeChartComponent, pathMatch: 'full'},
+      {path: 'general/ohlc-chart', component: OhlcChartComponent, pathMatch: 'full'},
+      {path: 'volatility-chart', component: VolatilityChartComponent, pathMatch: 'full'},
+      {path: 'market-sentiment/linear', component: MarketLinearChartComponent, pathMatch: 'full'},
+      {path: 'market-sentiment/logarithmic', component: MarketLogarithmicChartComponent, pathMatch: 'full'},
+      {path: 'exchange-info', component: ExchangeInfoComponent, pathMatch: 'full'},
+      {path: 'deribit/option1', component: DeribitOption1ChartComponent, pathMatch: 'full'},
+      {path: 'deribit/option2', component: DeribitOption2ChartComponent, pathMatch: 'full'},
+      {path: 'deribit/option3', component: DeribitOption3ChartComponent, pathMatch: 'full'},
     ],
   },
   {path: '**', redirectTo: 'app'}

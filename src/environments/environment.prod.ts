@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  // apiUrl: 'http://localhost:8080/api/',
-  // apiUrl: 'http://localhost/api/',
+  // apiUrl: 'http://localhost:800/api/',
+  // socketIOUrl: 'http://localhost:800',
   apiUrl: 'http://139.180.195.22/api/',
+  socketIOUrl: 'http://139.180.195.22',
 };

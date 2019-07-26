@@ -1,9 +1,13 @@
 export default {
   siteName: 'BlockReducer',
+  noData: 'No data',
   signIn: 'Sign in',
   signUp: 'Sign up',
   signOut: 'Sign out',
   home: 'Home',
+  success: 'Success',
+  error: 'Error',
+  unkbownServerError: 'Unknown server error',
   signInWithYourAccount: 'Sign in with your account',
   signUpToYourAccount: 'Sign up to your Account',
   firstName: 'First Name',
@@ -48,4 +52,8 @@ export default {
   binSize: 'Bin size',
   timezone: 'Timezone',
   submit: 'Submit',
+
+  symbol: 'Symbol',
+  minPrice: 'Min Price',
+  itemCount: 'Item Count',
 };

@@ -7,7 +7,7 @@
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item dropdown">
           <a id="pageTitle" class="nav-link" data-toggle="dropdown">
-            <span>{{pageTitle}}</span>
+            <span>{{strings.volumeChart}}</span>
           </a>
         </li>
       </ul>
@@ -17,6 +17,16 @@
 <div ui-view="" class="app-body" id="view">
   <div class="padding2">
     <form name="form" class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="col-lg-2 col-md-6">
+        <mat-form-field class="full-width-field">
+          <mat-label>{{strings.binSize}}</mat-label>
+          <mat-select formControlName="binSize">
+            <mat-option *ngFor="let binSize of binSizes" [value]="binSize.value">
+              {{binSize.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <div class="col-lg-3 col-md-6">
         <mat-form-field class="full-width-field">
           <input matInput [matDatepicker]="startDatePicker" formControlName="startTime" placeholder="{{strings.startTime}}">
@@ -32,15 +42,16 @@
           <!--          <label>{{strings.endTime}}</label>-->
         </mat-form-field>
       </div>
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-2 col-md-6">
         <mat-form-field class="full-width-field">
           <input matInput type="number" placeholder="{{strings.timezone}}" formControlName="timezone">
         </mat-form-field>
       </div>
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-2 col-md-6">
         <button mat-raised-button color="accent" type="submit" [disabled]="loading">{{strings.submit}}</button>
       </div>
     </form>
-    <plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>
+    <plotly-plot [data]="plotly1.data" [layout]="plotly1.layout" [useResizeHandler]="true"></plotly-plot>
+    <plotly-plot [data]="plotly2.data" [layout]="plotly2.layout" [useResizeHandler]="true"></plotly-plot>
   </div>
 </div>

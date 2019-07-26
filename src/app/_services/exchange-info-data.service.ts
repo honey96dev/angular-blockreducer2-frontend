@@ -6,13 +6,20 @@ import {environment} from '@environments/environment';
 import {apis} from '@core/apis';
 
 @Injectable({providedIn: 'root'})
-export class ChartDataService {
+export class ExchangeInfoDataService {
 
   constructor(private http: HttpClient) {
   }
 
-  price(params) {
-    return this.http.post<any>(`${environment.apiUrl}${apis.general.price}`, params)
+  cryptoMarkets() {
+    return this.http.get<any>(`${environment.apiUrl}${apis.exchangeInfo.cryptoMarkets}`, {})
+      .pipe(map(res => {
+        return res;
+      }));
+  }
+
+  subscribe(params) {
+    return this.http.post<any>(`${environment.apiUrl}${apis.exchangeInfo.subscribe}`, params)
       .pipe(map(res => {
         return res;
       }));

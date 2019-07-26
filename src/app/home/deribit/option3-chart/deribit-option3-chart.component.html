@@ -1,0 +1,39 @@
+<div class="app-header white box-shadow">
+  <div class="navbar navbar-toggleable-sm flex-row align-items-center">
+    <a data-toggle="modal" data-target="#aside" class="hidden-lg-up mr-3">
+      <i class="material-icons"></i>
+    </a>
+    <div class="collapse navbar-collapse" id="collapse">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a id="pageTitle" class="nav-link" data-toggle="dropdown">
+            <span>{{strings.deribitInformation}} {{strings.option3}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div ui-view="" class="app-body" id="view">
+  <div class="padding2">
+    <form name="form" class="row mb-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="col-lg-3 col-md-6">
+        <button mat-raised-button color="accent" type="submit" [disabled]="loading">{{strings.submit}}</button>
+      </div>
+    </form>
+    <div *ngIf="arrow.show" class="box-color pos-rlt" [ngClass]="arrow.type">
+      <span class="top b-primary"></span>
+      <div class="box-body">{{arrow.message}}</div>
+    </div>
+    <div class="full-width deribit-plotly">
+      <div class="row mx-0">
+        <plotly-plot class="col-sm-6 col-md-4 px-0" [data]="spreadStrikeGraph.data" [layout]="spreadStrikeGraph.layout" [useResizeHandler]="true"></plotly-plot>
+        <plotly-plot class="col-sm-6 col-md-4 px-0" [data]="spreadBidGraph.data" [layout]="spreadBidGraph.layout" [useResizeHandler]="true"></plotly-plot>
+        <plotly-plot class="col-sm-6 col-md-4 px-0" [data]="spreadDeltaGraph.data" [layout]="spreadDeltaGraph.layout" [useResizeHandler]="true"></plotly-plot>
+        <plotly-plot class="col-sm-6 col-md-4 px-0" [data]="spreadGammaGraph.data" [layout]="spreadGammaGraph.layout" [useResizeHandler]="true"></plotly-plot>
+        <plotly-plot class="col-sm-6 col-md-4 px-0" [data]="spreadVegaGraph.data" [layout]="spreadVegaGraph.layout" [useResizeHandler]="true"></plotly-plot>
+        <plotly-plot class="col-sm-6 col-md-4 px-0" [data]="spreadKDEGraph.data" [layout]="spreadKDEGraph.layout" [useResizeHandler]="true"></plotly-plot>
+      </div>
+    </div>
+  </div>
+</div>

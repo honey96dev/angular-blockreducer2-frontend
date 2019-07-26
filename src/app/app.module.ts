@@ -9,7 +9,7 @@ import {
   MatNativeDateModule,
   DateAdapter,
   MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE
+  MAT_DATE_LOCALE, MatSelectModule, MatTableModule, MatPaginatorModule, MatCheckboxModule, MatSortModule, MatIconModule
 } from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {CommonModule} from '@angular/common';
@@ -23,6 +23,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
 import {AppRoutingModule} from './app-routing.module';
 import {ReactiveFormsModule} from "@angular/forms";
 import {JwtInterceptor, ErrorInterceptor} from './_helpers';
+import {CheckForceValidator} from "@app/_helpers/check-force.validator";
+
 import {AppComponent} from './app.component';
 import {AuthLayoutComponent} from './auth/auth-layout/auth-layout.component';
 import {SigninComponent} from './auth/signin/signin.component';
@@ -31,6 +33,14 @@ import {HomeLayoutComponent} from './home/home-layout/home-layout.component';
 import {DashboardComponent} from './home/dashboard/dashboard.component';
 import {PriceChartComponent} from './home/general/price-chart/price-chart.component';
 import {VolumeChartComponent} from './home/general/volume-chart/volume-chart.component';
+import {OhlcChartComponent} from "@app/home/general/ohlc-chart/ohlc-chart.component";
+import {VolatilityChartComponent} from "@app/home/volatility/volatility-chart.component";
+import {MarketLinearChartComponent} from "@app/home/market-sentiment/linear/market-linear-chart.component";
+import {MarketLogarithmicChartComponent} from "@app/home/market-sentiment/logarithmic/market-logarithmic-chart.component";
+import {ExchangeInfoComponent} from "@app/home/exchange-info/exchange-info.component";
+import {DeribitOption1ChartComponent} from "@app/home/deribit/option1-chart/deribit-option1-chart.component";
+import {DeribitOption2ChartComponent} from "@app/home/deribit/option2-chart/deribit-option2-chart.component";
+import {DeribitOption3ChartComponent} from "@app/home/deribit/option3-chart/deribit-option3-chart.component";
 
 export const MY_FORMATS = {
   parse: {
@@ -46,6 +56,7 @@ export const MY_FORMATS = {
 
 @NgModule({
   declarations: [
+    CheckForceValidator,
     AppComponent,
     AuthLayoutComponent,
     SigninComponent,
@@ -54,6 +65,14 @@ export const MY_FORMATS = {
     DashboardComponent,
     PriceChartComponent,
     VolumeChartComponent,
+    OhlcChartComponent,
+    VolatilityChartComponent,
+    MarketLinearChartComponent,
+    MarketLogarithmicChartComponent,
+    ExchangeInfoComponent,
+    DeribitOption1ChartComponent,
+    DeribitOption2ChartComponent,
+    DeribitOption3ChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,9 +84,15 @@ export const MY_FORMATS = {
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatTableModule,
+    MatPaginatorModule,
     PlotlyModule,
+    MatCheckboxModule,
+    MatSortModule,
+    MatIconModule,
   ],
   providers: [
     Title,

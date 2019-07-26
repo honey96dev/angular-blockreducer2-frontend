@@ -7,11 +7,11 @@ import {GeneralChartDataService} from "@app/_services/general-chart-data.service
 import {first} from "rxjs/operators";
 
 @Component({
-  selector: 'home-price-chart',
-  templateUrl: './price-chart.component.html',
-  styleUrls: ['./price-chart.component.scss']
+  selector: 'home-ohlc-chart',
+  templateUrl: './ohlc-chart.component.html',
+  styleUrls: ['./ohlc-chart.component.scss']
 })
-export class PriceChartComponent implements OnInit {
+export class OhlcChartComponent implements OnInit {
   strings = strings;
   form: FormGroup;
   arrow = {
@@ -24,10 +24,11 @@ export class PriceChartComponent implements OnInit {
   error = '';
   priceData = {
     x: [],
-    y: [],
-    type: 'scatter',
-    // mode: 'lines+points',
-    // marker: {color: 'red'}
+    open: [],
+    high: [],
+    low: [],
+    close: [],
+    type: 'ohlc',
   };
   graph = {
     data: [this.priceData],
@@ -37,12 +38,6 @@ export class PriceChartComponent implements OnInit {
     layout: {
       height: 850,
       autosize: true,
-      // margin: {
-      //   l: 40,
-      //   r: 40,
-      //   t: 30,
-      //   b: 30,
-      // },
       xaxis: {
         autorange: true,
         rangeslider: {},
@@ -52,6 +47,7 @@ export class PriceChartComponent implements OnInit {
       yaxis: {
         title: 'Price',
         autorange: true,
+        rangeslider: {},
         type: 'linear',
       },
     },
@@ -60,7 +56,7 @@ export class PriceChartComponent implements OnInit {
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
                      private chartDataService: GeneralChartDataService) {
-    titleService.setTitle(`${strings.priceChart}-${strings.siteName}`);
+    titleService.setTitle(`${strings.ohlcChart}-${strings.siteName}`);
   }
 
   ngOnInit() {
@@ -92,8 +88,12 @@ export class PriceChartComponent implements OnInit {
     const timezone = this.f.timezone.value;
 
     this.priceData.x = [];
-    this.priceData.y = [];
-    this.chartDataService.price({
+    this.priceData.open = [];
+    this.priceData.high = [];
+    this.priceData.low = [];
+    this.priceData.close = [];
+
+    this.chartDataService.ohlc({
       symbol,
       binSize,
       startTime,
@@ -107,7 +107,6 @@ export class PriceChartComponent implements OnInit {
 
         if (res.result == 'success') {
           const data = res.data;
-
           if (data.length === 0) {
             this.arrow = {
               show: true,
@@ -117,7 +116,10 @@ export class PriceChartComponent implements OnInit {
           } else {
             for (let item of data) {
               this.priceData.x.push(item['timestamp']);
-              this.priceData.y.push(item['open']);
+              this.priceData.open.push(item['open']);
+              this.priceData.high.push(item['high']);
+              this.priceData.low.push(item['low']);
+              this.priceData.close.push(item['close']);
             }
           }
         } else {
@@ -136,7 +138,10 @@ export class PriceChartComponent implements OnInit {
           message: strings.unkbownServerError,
         };
         this.priceData.x = [];
-        this.priceData.y = [];
+        this.priceData.open = [];
+        this.priceData.high = [];
+        this.priceData.low = [];
+        this.priceData.close = [];
       });
   }
 }
