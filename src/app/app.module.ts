@@ -44,6 +44,7 @@ import {DeribitOption2ChartComponent} from "@app/home/deribit/option2-chart/deri
 import {DeribitOption3ChartComponent} from "@app/home/deribit/option3-chart/deribit-option3-chart.component";
 import {VwapChartComponent} from "@app/home/general/vwap-chart/vwap-chart.component";
 import {SettingsComponent} from "@app/home/settings/settings.component";
+import {CheckForceValidator} from "@app/_helpers/check-force.validator";
 
 export const MY_FORMATS = {
   parse: {
@@ -59,6 +60,7 @@ export const MY_FORMATS = {
 
 @NgModule({
   declarations: [
+    CheckForceValidator,
     MatchValueDirective,
     AppComponent,
     AuthLayoutComponent,
