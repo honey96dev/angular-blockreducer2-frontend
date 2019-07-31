@@ -1,0 +1,47 @@
+<div class="app-header white box-shadow">
+  <div class="navbar navbar-toggleable-sm flex-row align-items-center">
+    <div class="collapse navbar-collapse" id="collapse">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a id="pageTitle" class="nav-link" data-toggle="dropdown">
+            <span>{{strings.settings}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div ui-view="" class="app-body" id="view">
+  <div class="padding">
+    <div class="align-content-center">
+      <form role="form" name="form" class="col-xl-4 col-lg-6 mx-auto" [formGroup]="passwordChangeForm" [matchValue]= "['newPassword', 'confirmPassword'] " (ngSubmit)="onChangePassword()">
+        <div *ngIf="passwordArrow.show" class="box-color pos-rlt" [ngClass]="passwordArrow.type">
+          <span class="top b-primary"></span>
+          <div class="box-body">{{passwordArrow.message}}</div>
+        </div>
+        <mat-form-field class="full-width-field">
+          <input matInput type="password" formControlName="currentPassword" placeholder="{{strings.currentPassword}}">
+          <div *ngIf="submitted && f.currentPassword.errors" class="invalid-feedback">
+            <div *ngIf="f.currentPassword.errors.required">{{strings.thisFieldIsRequired}}</div>
+          </div>
+        </mat-form-field>
+        <mat-form-field class="full-width-field">
+          <input matInput type="password" formControlName="newPassword" placeholder="{{strings.newPassword}}">
+          <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
+            <div *ngIf="f.newPassword.errors.required">{{strings.thisFieldIsRequired}}</div>
+          </div>
+        </mat-form-field>
+        <mat-form-field class="full-width-field">
+          <input matInput type="password" formControlName="confirmPassword" placeholder="{{strings.confirmPassword}}" [errorStateMatcher]="matcher">
+          <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+<!--            <div *ngIf="f.confirmPassword.errors.required">{{strings.thisFieldIsRequired}}</div>-->
+            <div *ngIf="f.confirmPassword.errors.matchValueError">{{strings.confirmPasswordIsNotMatchWithNewPassword}}</div>
+          </div>
+        </mat-form-field>
+        <button mat-raised-button color="accent" type="submit" [disabled]="loading">{{strings.change}}</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--[matchValue]= "['password', 'confirmPassword']"-->

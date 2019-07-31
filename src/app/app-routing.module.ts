@@ -16,6 +16,8 @@ import {VolatilityChartComponent} from "@app/home/volatility/volatility-chart.co
 import {DeribitOption1ChartComponent} from "@app/home/deribit/option1-chart/deribit-option1-chart.component";
 import {DeribitOption2ChartComponent} from "@app/home/deribit/option2-chart/deribit-option2-chart.component";
 import {DeribitOption3ChartComponent} from "@app/home/deribit/option3-chart/deribit-option3-chart.component";
+import {VwapChartComponent} from "@app/home/general/vwap-chart/vwap-chart.component";
+import {SettingsComponent} from "@app/home/settings/settings.component";
 
 const routes: Routes = [
   {
@@ -37,6 +39,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},
       {path: 'general/price-chart', component: PriceChartComponent, pathMatch: 'full'},
       {path: 'general/volume-chart', component: VolumeChartComponent, pathMatch: 'full'},
+      {path: 'general/vwap-chart', component: VwapChartComponent, pathMatch: 'full'},
       {path: 'general/ohlc-chart', component: OhlcChartComponent, pathMatch: 'full'},
       {path: 'volatility-chart', component: VolatilityChartComponent, pathMatch: 'full'},
       {path: 'market-sentiment/linear', component: MarketLinearChartComponent, pathMatch: 'full'},
@@ -45,6 +48,7 @@ const routes: Routes = [
       {path: 'deribit/option1', component: DeribitOption1ChartComponent, pathMatch: 'full'},
       {path: 'deribit/option2', component: DeribitOption2ChartComponent, pathMatch: 'full'},
       {path: 'deribit/option3', component: DeribitOption3ChartComponent, pathMatch: 'full'},
+      {path: 'settings', component: SettingsComponent, pathMatch: 'full'},
     ],
   },
   {path: '**', redirectTo: 'app'}

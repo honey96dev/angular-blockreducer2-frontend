@@ -25,6 +25,9 @@ const apis = {
     instruments: 'deribit/instruments',
     data: 'deribit/data',
   },
+  settings: {
+    password: 'settings/password',
+  },
 };
 
 export {

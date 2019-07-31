@@ -23,7 +23,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
 import {AppRoutingModule} from './app-routing.module';
 import {ReactiveFormsModule} from "@angular/forms";
 import {JwtInterceptor, ErrorInterceptor} from './_helpers';
-import {CheckForceValidator} from "@app/_helpers/check-force.validator";
+import {MyErrorStateMatcher} from "@app/_helpers/my-error.state-matcher";
+import {MatchValueDirective} from "@app/_helpers/match-value.directive";
 
 import {AppComponent} from './app.component';
 import {AuthLayoutComponent} from './auth/auth-layout/auth-layout.component';
@@ -41,6 +42,8 @@ import {ExchangeInfoComponent} from "@app/home/exchange-info/exchange-info.compo
 import {DeribitOption1ChartComponent} from "@app/home/deribit/option1-chart/deribit-option1-chart.component";
 import {DeribitOption2ChartComponent} from "@app/home/deribit/option2-chart/deribit-option2-chart.component";
 import {DeribitOption3ChartComponent} from "@app/home/deribit/option3-chart/deribit-option3-chart.component";
+import {VwapChartComponent} from "@app/home/general/vwap-chart/vwap-chart.component";
+import {SettingsComponent} from "@app/home/settings/settings.component";
 
 export const MY_FORMATS = {
   parse: {
@@ -56,7 +59,7 @@ export const MY_FORMATS = {
 
 @NgModule({
   declarations: [
-    CheckForceValidator,
+    MatchValueDirective,
     AppComponent,
     AuthLayoutComponent,
     SigninComponent,
@@ -65,6 +68,7 @@ export const MY_FORMATS = {
     DashboardComponent,
     PriceChartComponent,
     VolumeChartComponent,
+    VwapChartComponent,
     OhlcChartComponent,
     VolatilityChartComponent,
     MarketLinearChartComponent,
@@ -73,6 +77,7 @@ export const MY_FORMATS = {
     DeribitOption1ChartComponent,
     DeribitOption2ChartComponent,
     DeribitOption3ChartComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +109,8 @@ export const MY_FORMATS = {
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     // MatMomentDateModule,
     MatDatepickerModule,
+
+    MyErrorStateMatcher,
   ],
   bootstrap: [
     AppComponent,

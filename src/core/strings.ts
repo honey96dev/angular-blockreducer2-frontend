@@ -56,4 +56,9 @@ export default {
   symbol: 'Symbol',
   minPrice: 'Min Price',
   itemCount: 'Item Count',
+  currentPassword: 'Current Password',
+  newPassword: 'New Password',
+  confirmPassword: 'Confirm Password',
+  change: 'Change',
+  confirmPasswordIsNotMatchWithNewPassword: 'Confirm Password is not match with new password',
 };

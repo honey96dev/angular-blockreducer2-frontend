@@ -7,11 +7,11 @@ import {GeneralChartDataService} from "@app/_services/general-chart-data.service
 import {first} from "rxjs/operators";
 
 @Component({
-  selector: 'home-volume-chart',
-  templateUrl: './volume-chart.component.html',
-  styleUrls: ['./volume-chart.component.scss']
+  selector: 'home-vwap-chart',
+  templateUrl: './vwap-chart.component.html',
+  styleUrls: ['./vwap-chart.component.scss']
 })
-export class VolumeChartComponent implements OnInit {
+export class VwapChartComponent implements OnInit {
   strings = strings;
   form: FormGroup;
   arrow = {
@@ -29,50 +29,36 @@ export class VolumeChartComponent implements OnInit {
     {label: '1h', value: '1h'},
   ];
 
-  openData = {
+  num_3 = {
     x: [],
     y: [],
+    name: 'Num3*VWAP',
     yaxis: 'y1',
-    name: 'Open',
     type: 'scatter',
   };
-  volumeData = {
+  num_6 = {
     x: [],
     y: [],
-    yaxis: 'y2',
-    name: 'Volume',
-    type: 'scatter',
-  };
-  volumeSumData = {
-    x: [],
-    y: [],
-    yaxis: 'y2',
-    name: 'Volume Sum',
-    type: 'scatter',
-  };
-  open2Data = {
-    x: [],
-    y: [],
+    name: 'Num6*VWAP',
     yaxis: 'y1',
-    name: 'Open',
     type: 'scatter',
   };
-  openInterestData = {
+  num_9 = {
     x: [],
     y: [],
-    yaxis: 'y2',
-    name: 'Open Interest',
+    name: 'Num9*VWAP',
+    yaxis: 'y1',
     type: 'scatter',
   };
-  openValueData = {
+  num_100 = {
     x: [],
     y: [],
-    yaxis: 'y2',
-    name: 'Open Value',
+    name: 'Num100*VWAP',
+    yaxis: 'y1',
     type: 'scatter',
   };
   plotly1 = {
-    data: [this.openData, this.volumeData, this.volumeSumData],
+    data: [this.num_3, this.num_6, this.num_9, this.num_100,],
     layout: {
       height: 700,
       autosize: true,
@@ -84,36 +70,12 @@ export class VolumeChartComponent implements OnInit {
         type: 'date',
       },
       yaxis: {
-        title: 'Price',
+        title: 'Open / Real',
         autorange: true,
         type: 'linear',
       },
       yaxis2: {
-        title: 'Volume / Volume Sum',
-        overlaying: 'y',
-        side: 'right',
-      }
-    },
-  };
-  plotly2 = {
-    data: [this.open2Data, this.openInterestData, this.openValueData],
-    layout: {
-      height: 700,
-      autosize: true,
-      showlegend: true,
-      xaxis: {
-        autorange: true,
-        rangeslider: {},
-        title: 'Date',
-        type: 'date',
-      },
-      yaxis: {
-        title: 'Price',
-        autorange: true,
-        type: 'linear',
-      },
-      yaxis2: {
-        title: 'Open Interest / Open Value',
+        title: 'Volume',
         overlaying: 'y',
         side: 'right',
       }
@@ -156,12 +118,14 @@ export class VolumeChartComponent implements OnInit {
     const endTime = datePipe.transform(this.f.endTime.value, 'yyyy-MM-dd');
     const timezone = this.f.timezone.value;
 
-    this.openData.x = [];
-    this.openData.y = [];
-    this.volumeData.x = [];
-    this.volumeData.y = [];
-    this.volumeSumData.x = [];
-    this.volumeSumData.y = [];
+    this.num_3.x = [];
+    this.num_3.y = [];
+    this.num_6.x = [];
+    this.num_6.y = [];
+    this.num_9.x = [];
+    this.num_9.y = [];
+    this.num_100.x = [];
+    this.num_100.y = [];
 
     this.chartDataService.volume1({
       symbol,
@@ -185,66 +149,14 @@ export class VolumeChartComponent implements OnInit {
             };
           } else {
             for (let item of data) {
-              this.openData.x.push(item['timestamp']);
-              this.openData.y.push(item['open']);
-              this.volumeData.x.push(item['timestamp']);
-              this.volumeData.y.push(item['volume']);
-              this.volumeSumData.x.push(item['timestamp']);
-              this.volumeSumData.y.push(item['volumeSum']);
-            }
-          }
-        } else {
-          this.arrow = {
-            show: true,
-            type: 'danger',
-            message: res.message,
-          };
-        }
-      }, error => {
-        this.loading = false;
-        this.error = error;
-        this.arrow = {
-          show: true,
-          type: 'danger',
-          message: strings.unkbownServerError,
-        };
-      });
-
-    this.open2Data.x = [];
-    this.open2Data.y = [];
-    this.openInterestData.x = [];
-    this.openInterestData.y = [];
-    this.openValueData.x = [];
-    this.openValueData.y = [];
-
-    this.chartDataService.volume2({
-      symbol,
-      binSize,
-      startTime,
-      endTime,
-      timezone,
-    })
-      .pipe(first())
-      .subscribe(res => {
-        this.loading = false;
-        this.arrow.show = false;
-
-        if (res.result == 'success') {
-          const data = res.data;
-          if (data.length === 0) {
-            this.arrow = {
-              show: true,
-              type: 'warning',
-              message: strings.noData,
-            };
-          } else {
-            for (let item of data) {
-              this.open2Data.x.push(item['timestamp']);
-              this.open2Data.y.push(item['open']);
-              this.openInterestData.x.push(item['timestamp']);
-              this.openInterestData.y.push(item['openInterest']);
-              this.openValueData.x.push(item['timestamp']);
-              this.openValueData.y.push(item['openValue']);
+              this.num_3.x.push(item.timestamp);
+              this.num_3.y.push(item.num_3);
+              this.num_6.x.push(item.timestamp);
+              this.num_6.y.push(item.num_6);
+              this.num_9.x.push(item.timestamp);
+              this.num_9.y.push(item.num_9);
+              this.num_100.x.push(item.timestamp);
+              this.num_100.y.push(item.num_100);
             }
           }
         } else {
