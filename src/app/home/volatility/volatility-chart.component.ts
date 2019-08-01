@@ -5,6 +5,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {first} from "rxjs/operators";
 import {VolatilityChartDataService} from "@app/_services/volatility-chart-data.service";
+import {GlobalVariableService} from "@app/_services/global-variable.service";
+
+let self;
 
 @Component({
   selector: 'home-volatility-chart',
@@ -103,8 +106,10 @@ export class VolatilityChartComponent implements OnInit {
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
+                     private globalsService: GlobalVariableService,
                      private chartDataService: VolatilityChartDataService) {
     titleService.setTitle(`${strings.volatilityChart}-${strings.siteName}`);
+    self = this;
   }
 
   ngOnInit() {
@@ -125,25 +130,29 @@ export class VolatilityChartComponent implements OnInit {
   }
 
   onSubmit() {
-    const self = this;
-    this.submitted = true;
-    this.loading = true;
-    this.arrow.show = false;
+    if (self.globalsService.chartTimeoutId) {
+      clearTimeout(self.globalsService.chartTimeoutId);
+    }
+    console.log('volatility-chart', new Date());
+
+    self.submitted = true;
+    self.loading = true;
+    self.arrow.show = false;
 
     const symbol = 'XBTUSD';
-    const binSize = this.f.binSize.value;
+    const binSize = self.f.binSize.value;
     const datePipe = new DatePipe('en');
-    const startTime = datePipe.transform(this.f.startTime.value, 'yyyy-MM-dd');
-    const endTime = datePipe.transform(this.f.endTime.value, 'yyyy-MM-dd');
-    const timezone = this.f.timezone.value;
+    const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');
+    const endTime = datePipe.transform(self.f.endTime.value, 'yyyy-MM-dd');
+    const timezone = self.f.timezone.value;
 
-    this.openData.x = [];
-    this.openData.y = [];
-    this.highPassData.x = [];
-    this.highPassData.y = [];
-    this.lowPassData.x = [];
-    this.lowPassData.y = [];
-    this.chartDataService.real(binSize, {
+    self.openData.x = [];
+    self.openData.y = [];
+    self.highPassData.x = [];
+    self.highPassData.y = [];
+    self.lowPassData.x = [];
+    self.lowPassData.y = [];
+    self.chartDataService.real(binSize, {
       symbol,
       startTime,
       endTime,
@@ -151,43 +160,51 @@ export class VolatilityChartComponent implements OnInit {
     })
       .pipe(first())
       .subscribe(res => {
-        this.loading = false;
-        this.arrow.show = false;
+        self.loading = false;
+        self.arrow.show = false;
 
         if (res.result == 'success') {
           const data = res.data;
 
           if (data.length === 0) {
-            this.arrow = {
+            self.arrow = {
               show: true,
               type: 'warning',
               message: strings.noData,
             };
           } else {
             for (let item of data) {
-              this.openData.x.push(item['timestamp']);
-              this.openData.y.push(item['open']);
-              this.highPassData.x.push(item['timestamp']);
-              this.highPassData.y.push(item['highPass']);
-              this.lowPassData.x.push(item['timestamp']);
-              this.lowPassData.y.push(item['lowPass']);
+              self.openData.x.push(item['timestamp']);
+              self.openData.y.push(item['open']);
+              self.highPassData.x.push(item['timestamp']);
+              self.highPassData.y.push(item['highPass']);
+              self.lowPassData.x.push(item['timestamp']);
+              self.lowPassData.y.push(item['lowPass']);
             }
           }
         } else {
-          this.arrow = {
+          self.arrow = {
             show: true,
             type: 'danger',
             message: res.message,
           };
         }
       }, error => {
-        this.loading = false;
-        this.error = error;
-        this.arrow = {
+        self.loading = false;
+        self.error = error;
+        self.arrow = {
           show: true,
           type: 'danger',
           message: strings.unkbownServerError,
         };
       });
+
+    let timeoutDelay = 2 * 60 * 1000;
+    if (binSize === '1m') {
+      timeoutDelay = 30 * 1000;
+    } else if (binSize === '1h') {
+      timeoutDelay = 30 * 60 * 1000;
+    }
+    self.globalsService.chartTimeoutId = setTimeout(self.onSubmit, timeoutDelay);
   }
 }

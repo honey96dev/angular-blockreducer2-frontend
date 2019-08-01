@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "@app/_services";
 import {first} from "rxjs/operators";
 import strings from '@core/strings';
+import {environment} from "@environments/environment";
+import SocketIOClient from 'socket.io-client';
 
 @Component({
   selector: 'auth-signin',
@@ -23,6 +25,13 @@ export class SigninComponent implements OnInit {
     type: '',
     message: '',
   };
+
+  ioClient = SocketIOClient(environment.socketIOUrl, {
+    reconnection: true,
+    reconnectionDelay: 2000,
+    reconnectionDelayMax: 4000,
+    reconnectionAttempts: Infinity
+  });
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
@@ -69,6 +78,7 @@ export class SigninComponent implements OnInit {
         this.arrow.show = false;
 
         if (res.result == 'success') {
+          this.ioClient.emit('user-signin', this.authenticationService.currentUserValue);
           this.router.navigate([this.returnUrl]);
         } else {
           this.arrow = {

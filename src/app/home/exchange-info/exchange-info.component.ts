@@ -72,14 +72,14 @@ export class ExchangeInfoComponent implements OnInit {
     reconnectionAttempts: Infinity
   });
 
+  @ViewChild(MatPaginator, {static: true}) exchangeSourcePaginator: MatPaginator;
+
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
                      private chartDataService: ExchangeInfoDataService,
                      private changeDetectorRefs: ChangeDetectorRef) {
     titleService.setTitle(`${strings.exchangeInformation}-${strings.siteName}`);
   }
-
-  @ViewChild(MatPaginator, {static: true}) exchangeSourcePaginator: MatPaginator;
 
   ngOnInit() {
     const self = this;
@@ -176,6 +176,7 @@ export class ExchangeInfoComponent implements OnInit {
               message: strings.noData,
             };
           } else {
+            this.cryptowatchRows = [];
             for (let item of data) {
               this.cryptowatchRows.push(item);
             }

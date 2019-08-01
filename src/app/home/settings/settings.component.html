@@ -32,7 +32,7 @@
           </div>
         </mat-form-field>
         <mat-form-field class="full-width-field">
-          <input matInput type="password" formControlName="confirmPassword" placeholder="{{strings.confirmPassword}}" [errorStateMatcher]="matcher">
+          <input matInput type="password" formControlName="confirmPassword" placeholder="{{strings.confirmPassword}}">
           <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
 <!--            <div *ngIf="f.confirmPassword.errors.required">{{strings.thisFieldIsRequired}}</div>-->
             <div *ngIf="f.confirmPassword.errors.matchValueError">{{strings.confirmPasswordIsNotMatchWithNewPassword}}</div>

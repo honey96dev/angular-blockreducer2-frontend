@@ -5,6 +5,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {first} from "rxjs/operators";
 import {MarketSentimentChartDataService} from "@app/_services/market-sentiment-chart-data.service";
+import {GlobalVariableService} from "@app/_services/global-variable.service";
+
+let self;
 
 @Component({
   selector: 'home-market-logarithmic-chart',
@@ -143,8 +146,10 @@ export class MarketLogarithmicChartComponent implements OnInit {
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
+                     private globalsService: GlobalVariableService,
                      private chartDataService: MarketSentimentChartDataService) {
     titleService.setTitle(`${strings.marketSentiment} ${strings.logarithmicChart}-${strings.siteName}`);
+    self = this;
   }
 
   ngOnInit() {
@@ -165,37 +170,41 @@ export class MarketLogarithmicChartComponent implements OnInit {
   }
 
   onSubmit() {
-    const self = this;
-    this.submitted = true;
-    this.loading = true;
-    this.arrow.show = false;
+    if (self.globalsService.chartTimeoutId) {
+      clearTimeout(self.globalsService.chartTimeoutId);
+    }
+    console.log('market-logarithmic-chart', new Date());
+
+    self.submitted = true;
+    self.loading = true;
+    self.arrow.show = false;
 
     const symbol = 'XBTUSD';
-    const binSize = this.f.binSize.value;
+    const binSize = self.f.binSize.value;
     const datePipe = new DatePipe('en');
-    const startTime = datePipe.transform(this.f.startTime.value, 'yyyy-MM-dd');
-    const endTime = datePipe.transform(this.f.endTime.value, 'yyyy-MM-dd');
-    const timezone = this.f.timezone.value;
+    const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');
+    const endTime = datePipe.transform(self.f.endTime.value, 'yyyy-MM-dd');
+    const timezone = self.f.timezone.value;
 
-    this.openData.x = [];
-    this.openData.y = [];
-    this.num3Data.x = [];
-    this.num3Data.y = [];
-    this.num6Data.x = [];
-    this.num6Data.y = [];
-    this.num9Data.x = [];
-    this.num9Data.y = [];
-    this.num100Data.x = [];
-    this.num100Data.y = [];
-    this.num3iData.x = [];
-    this.num3iData.y = [];
-    this.num6iData.x = [];
-    this.num6iData.y = [];
-    this.num9iData.x = [];
-    this.num9iData.y = [];
-    this.num100iData.x = [];
-    this.num100iData.y = [];
-    this.chartDataService.collection(binSize, {
+    self.openData.x = [];
+    self.openData.y = [];
+    self.num3Data.x = [];
+    self.num3Data.y = [];
+    self.num6Data.x = [];
+    self.num6Data.y = [];
+    self.num9Data.x = [];
+    self.num9Data.y = [];
+    self.num100Data.x = [];
+    self.num100Data.y = [];
+    self.num3iData.x = [];
+    self.num3iData.y = [];
+    self.num6iData.x = [];
+    self.num6iData.y = [];
+    self.num9iData.x = [];
+    self.num9iData.y = [];
+    self.num100iData.x = [];
+    self.num100iData.y = [];
+    self.chartDataService.collection(binSize, {
       symbol,
       startTime,
       endTime,
@@ -203,55 +212,63 @@ export class MarketLogarithmicChartComponent implements OnInit {
     })
       .pipe(first())
       .subscribe(res => {
-        this.loading = false;
-        this.arrow.show = false;
+        self.loading = false;
+        self.arrow.show = false;
 
         if (res.result == 'success') {
           const data = res.data;
 
           if (data.length === 0) {
-            this.arrow = {
+            self.arrow = {
               show: true,
               type: 'warning',
               message: strings.noData,
             };
           } else {
             for (let item of data) {
-              this.openData.x.push(item['timestamp']);
-              this.openData.y.push(item['open']);
-              this.num3Data.x.push(item['timestamp']);
-              this.num3Data.y.push(item['num_3']);
-              this.num6Data.x.push(item['timestamp']);
-              this.num6Data.y.push(item['num_6']);
-              this.num9Data.x.push(item['timestamp']);
-              this.num9Data.y.push(item['num_9']);
-              this.num100Data.x.push(item['timestamp']);
-              this.num100Data.y.push(item['num_100']);
-              this.num3iData.x.push(item['timestamp']);
-              this.num3iData.y.push(item['num_3i']);
-              this.num6iData.x.push(item['timestamp']);
-              this.num6iData.y.push(item['num_6i']);
-              this.num9iData.x.push(item['timestamp']);
-              this.num9iData.y.push(item['num_9i']);
-              this.num100iData.x.push(item['timestamp']);
-              this.num100iData.y.push(item['num_100i']);
+              self.openData.x.push(item['timestamp']);
+              self.openData.y.push(item['open']);
+              self.num3Data.x.push(item['timestamp']);
+              self.num3Data.y.push(item['num_3']);
+              self.num6Data.x.push(item['timestamp']);
+              self.num6Data.y.push(item['num_6']);
+              self.num9Data.x.push(item['timestamp']);
+              self.num9Data.y.push(item['num_9']);
+              self.num100Data.x.push(item['timestamp']);
+              self.num100Data.y.push(item['num_100']);
+              self.num3iData.x.push(item['timestamp']);
+              self.num3iData.y.push(item['num_3i']);
+              self.num6iData.x.push(item['timestamp']);
+              self.num6iData.y.push(item['num_6i']);
+              self.num9iData.x.push(item['timestamp']);
+              self.num9iData.y.push(item['num_9i']);
+              self.num100iData.x.push(item['timestamp']);
+              self.num100iData.y.push(item['num_100i']);
             }
           }
         } else {
-          this.arrow = {
+          self.arrow = {
             show: true,
             type: 'danger',
             message: res.message,
           };
         }
       }, error => {
-        this.loading = false;
-        this.error = error;
-        this.arrow = {
+        self.loading = false;
+        self.error = error;
+        self.arrow = {
           show: true,
           type: 'danger',
           message: strings.unkbownServerError,
         };
       });
+
+    let timeoutDelay = 2 * 60 * 1000;
+    if (binSize === '1m') {
+      timeoutDelay = 30 * 1000;
+    } else if (binSize === '1h') {
+      timeoutDelay = 30 * 60 * 1000;
+    }
+    self.globalsService.chartTimeoutId = setTimeout(self.onSubmit, timeoutDelay);
   }
 }

@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>{{data.id > 0 ? strings.editUser : strings.addUser}}</h1>
+<!--<div mat-dialog-content>-->
+<!--  <p>{{strings.doYouWantToDelete}}</p>-->
+<!--</div>-->
+<div *ngIf="arrow.show" class="box-color pos-rlt" [ngClass]="arrow.type">
+  <span class="top b-primary"></span>
+  <div class="box-body">{{arrow.message}}</div>
+</div>
+<form name="form" class="full-width" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type="hidden" formControlName="firstName">
+  <mat-form-field class="full-width-field">
+    <input matInput formControlName="firstName" placeholder="{{strings.firstName}}">
+    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+      <div *ngIf="f.firstName.errors.required">{{strings.thisFieldIsRequired}}</div>
+    </div>
+  </mat-form-field>
+  <mat-form-field class="full-width-field">
+    <input matInput formControlName="lastName" placeholder="{{strings.lastName}}">
+    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+      <div *ngIf="f.lastName.errors.required">{{strings.thisFieldIsRequired}}</div>
+    </div>
+  </mat-form-field>
+  <mat-form-field class="full-width-field">
+    <input matInput formControlName="email" placeholder="{{strings.email}}">
+    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+      <div *ngIf="f.email.errors.required">{{strings.thisFieldIsRequired}}</div>
+      <div *ngIf="f.email.errors.email">{{strings.thisEmailIsInvalid}}</div>
+    </div>
+  </mat-form-field>
+  <mat-form-field class="full-width-field">
+    <input matInput formControlName="username" placeholder="{{strings.username}}">
+    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+      <div *ngIf="f.username.errors.required">{{strings.thisFieldIsRequired}}</div>
+    </div>
+  </mat-form-field>
+  <mat-form-field class="full-width-field" *ngIf="!data.id">
+    <input matInput formControlName="password" placeholder="{{strings.password}}">
+    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+      <div *ngIf="f.password.errors.required">{{strings.thisFieldIsRequired}}</div>
+    </div>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{strings.role}}</mat-label>
+    <mat-select formControlName="type">
+      <mat-option *ngFor="let role of roles" [value]="role.value">
+        {{role.label}}
+      </mat-option>
+    </mat-select>
+    <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+      <div *ngIf="f.type.errors.required">{{strings.thisFieldIsRequired}}</div>
+    </div>
+  </mat-form-field>
+  <div>
+    <button mat-button mat-dialog-close="{{strings.cancel}}">{{strings.cancel}}</button>
+    <button mat-raised-button class="ml-3" color="accent" type="submit" [disabled]="loading">{{data.id > 0 ? strings.edit : strings.add}}</button>
+  </div>
+</form>
+<!--<div mat-dialog-actions>-->
+<!--  <button mat-button mat-dialog-close="{{strings.yes}}" cdkFocusInitial>{{data.id > 0 ? strings.edit : strings.add}}</button>-->
+<!--</div>-->

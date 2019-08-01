@@ -16,7 +16,6 @@ export class DashboardComponent implements OnInit {
   form: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
   error = '';
 
   public constructor(private titleService: Title,
@@ -29,8 +28,6 @@ export class DashboardComponent implements OnInit {
     this.form = this.formBuilder.group({
     });
 
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields

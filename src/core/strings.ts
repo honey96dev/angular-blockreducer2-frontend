@@ -25,6 +25,8 @@ export default {
   agreeTheTermsAndPolicy: 'Agree the terms and policy',
   pleaseAcceptThis: 'Please accept this',
   refresh: 'Refresh',
+  adminPanel: 'Admin Panel',
+  userManagement: 'User Management',
   dashboard: 'Dashboard',
   general: 'General',
   priceChart: 'Price chart',
@@ -52,6 +54,16 @@ export default {
   binSize: 'Bin size',
   timezone: 'Timezone',
   submit: 'Submit',
+  filter: 'Filter',
+
+  id: 'ID',
+  name: 'Name',
+  url: 'URL',
+  active: 'Active',
+
+  no_: '#',
+  role: 'Role',
+  status: 'Status',
 
   symbol: 'Symbol',
   minPrice: 'Min Price',
@@ -61,4 +73,17 @@ export default {
   confirmPassword: 'Confirm Password',
   change: 'Change',
   confirmPasswordIsNotMatchWithNewPassword: 'Confirm Password is not match with new password',
+
+  yes: 'Yes',
+  no: 'No',
+
+  deleteUser: 'Delete User',
+  doYouWantToDelete: 'Do you want to delete?',
+
+  addUser: 'Add User',
+  editUser: 'Edit User',
+  add: 'Add',
+  edit: 'Edit',
+  cancel: 'Cancel',
+  thisEmailIsInvalid: 'This email is invalid',
 };

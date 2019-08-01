@@ -28,6 +28,9 @@ const apis = {
   settings: {
     password: 'settings/password',
   },
+  admin: {
+    users: 'admin/users',
+  },
 };
 
 export {

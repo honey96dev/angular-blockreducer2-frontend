@@ -9,7 +9,14 @@ import {
   MatNativeDateModule,
   DateAdapter,
   MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE, MatSelectModule, MatTableModule, MatPaginatorModule, MatCheckboxModule, MatSortModule, MatIconModule
+  MAT_DATE_LOCALE,
+  MatSelectModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatCheckboxModule,
+  MatSortModule,
+  MatIconModule,
+  MatTabsModule, MatDialogModule
 } from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {CommonModule} from '@angular/common';
@@ -23,7 +30,6 @@ PlotlyModule.plotlyjs = PlotlyJS;
 import {AppRoutingModule} from './app-routing.module';
 import {ReactiveFormsModule} from "@angular/forms";
 import {JwtInterceptor, ErrorInterceptor} from './_helpers';
-import {MyErrorStateMatcher} from "@app/_helpers/my-error.state-matcher";
 import {MatchValueDirective} from "@app/_helpers/match-value.directive";
 
 import {AppComponent} from './app.component';
@@ -45,6 +51,13 @@ import {DeribitOption3ChartComponent} from "@app/home/deribit/option3-chart/deri
 import {VwapChartComponent} from "@app/home/general/vwap-chart/vwap-chart.component";
 import {SettingsComponent} from "@app/home/settings/settings.component";
 import {CheckForceValidator} from "@app/_helpers/check-force.validator";
+import {GlobalVariableService} from "@app/_services/global-variable.service";
+import {
+  AdminUsersComponent,
+  AdminUsersDeleteDialog,
+  AdminUsersEditDialog
+} from "@app/home/admin/users/admin-users.component";
+import {AdminPanelComponent} from "@app/home/admin/panel/admin-panel.component";
 
 export const MY_FORMATS = {
   parse: {
@@ -80,6 +93,10 @@ export const MY_FORMATS = {
     DeribitOption2ChartComponent,
     DeribitOption3ChartComponent,
     SettingsComponent,
+    AdminPanelComponent,
+    AdminUsersComponent,
+    AdminUsersDeleteDialog,
+    AdminUsersEditDialog,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +105,7 @@ export const MY_FORMATS = {
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    PlotlyModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -96,10 +114,11 @@ export const MY_FORMATS = {
     MatDatepickerModule,
     MatTableModule,
     MatPaginatorModule,
-    PlotlyModule,
     MatCheckboxModule,
     MatSortModule,
     MatIconModule,
+    MatTabsModule,
+    MatDialogModule,
   ],
   providers: [
     Title,
@@ -112,10 +131,14 @@ export const MY_FORMATS = {
     // MatMomentDateModule,
     MatDatepickerModule,
 
-    MyErrorStateMatcher,
+    GlobalVariableService,
   ],
   bootstrap: [
     AppComponent,
+  ],
+  entryComponents: [
+    AdminUsersDeleteDialog,
+    AdminUsersEditDialog,
   ],
 })
 export class AppModule {

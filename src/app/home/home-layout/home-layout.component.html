@@ -12,6 +12,15 @@
     <div class="hide-scroll" data-flex>
       <nav class="scroll nav-light">
         <ul class="nav" ui-nav>
+          <li *ngIf="user['type'] === 'admin'">
+            <a routerLink="/app/admin/users">
+              <span class="nav-icon">
+                <i class="fa fa-desktop"></i>
+              </span>
+              <span class="nav-text">{{strings.adminPanel}}</span>
+            </a>
+          </li>
+
           <li>
             <a routerLink="/app">
               <span class="nav-icon">

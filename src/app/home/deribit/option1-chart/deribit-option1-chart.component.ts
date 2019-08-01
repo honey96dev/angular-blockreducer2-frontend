@@ -5,6 +5,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {DeribitChartDataService} from "@app/_services/deribit-chart-data.service";
 import {first} from "rxjs/operators";
+import {GlobalVariableService} from "@app/_services/global-variable.service";
+
+let self;
 
 @Component({
   selector: 'home-deribit-option1-chart',
@@ -282,8 +285,10 @@ export class DeribitOption1ChartComponent implements OnInit {
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
+                     private globalsService: GlobalVariableService,
                      private chartDataService: DeribitChartDataService) {
     titleService.setTitle(`${strings.deribitInformation} ${strings.option1}-${strings.siteName}`);
+    self = this;
   }
 
   ngOnInit() {
@@ -293,7 +298,11 @@ export class DeribitOption1ChartComponent implements OnInit {
   }
 
   onSubmit() {
-    const self = this;
+    if (self.globalsService.chartTimeoutId) {
+      clearTimeout(self.globalsService.chartTimeoutId);
+    }
+    console.log('deribit-option1-chart', new Date());
+
     this.submitted = true;
     this.loading = true;
     this.arrow.show = false;
@@ -402,5 +411,8 @@ export class DeribitOption1ChartComponent implements OnInit {
           message: strings.unkbownServerError,
         };
       });
+
+    let timeoutDelay = 2 * 60 * 1000;
+    self.globalsService.chartTimeoutId = setTimeout(self.onSubmit, timeoutDelay);
   }
 }

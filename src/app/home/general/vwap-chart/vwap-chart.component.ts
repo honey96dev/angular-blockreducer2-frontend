@@ -5,6 +5,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {GeneralChartDataService} from "@app/_services/general-chart-data.service";
 import {first} from "rxjs/operators";
+import {GlobalVariableService} from "@app/_services/global-variable.service";
+
+let self;
 
 @Component({
   selector: 'home-vwap-chart',
@@ -84,8 +87,10 @@ export class VwapChartComponent implements OnInit {
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
+                     private globalsService: GlobalVariableService,
                      private chartDataService: GeneralChartDataService) {
     titleService.setTitle(`${strings.volumeChart}-${strings.siteName}`);
+    self = this;
   }
 
   ngOnInit() {
@@ -106,28 +111,32 @@ export class VwapChartComponent implements OnInit {
   }
 
   onSubmit() {
-    const self = this;
-    this.submitted = true;
-    this.loading = true;
-    this.arrow.show = false;
+    if (self.globalsService.chartTimeoutId) {
+      clearTimeout(self.globalsService.chartTimeoutId);
+    }
+    console.log('vwap-chart', new Date());
+
+    self.submitted = true;
+    self.loading = true;
+    self.arrow.show = false;
 
     const symbol = 'XBTUSD';
-    const binSize = this.f.binSize.value;
+    const binSize = self.f.binSize.value;
     const datePipe = new DatePipe('en');
-    const startTime = datePipe.transform(this.f.startTime.value, 'yyyy-MM-dd');
-    const endTime = datePipe.transform(this.f.endTime.value, 'yyyy-MM-dd');
-    const timezone = this.f.timezone.value;
+    const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');
+    const endTime = datePipe.transform(self.f.endTime.value, 'yyyy-MM-dd');
+    const timezone = self.f.timezone.value;
 
-    this.num_3.x = [];
-    this.num_3.y = [];
-    this.num_6.x = [];
-    this.num_6.y = [];
-    this.num_9.x = [];
-    this.num_9.y = [];
-    this.num_100.x = [];
-    this.num_100.y = [];
+    self.num_3.x = [];
+    self.num_3.y = [];
+    self.num_6.x = [];
+    self.num_6.y = [];
+    self.num_9.x = [];
+    self.num_9.y = [];
+    self.num_100.x = [];
+    self.num_100.y = [];
 
-    this.chartDataService.volume1({
+    self.chartDataService.volume1({
       symbol,
       binSize,
       startTime,
@@ -136,44 +145,52 @@ export class VwapChartComponent implements OnInit {
     })
       .pipe(first())
       .subscribe(res => {
-        this.loading = false;
-        this.arrow.show = false;
+        self.loading = false;
+        self.arrow.show = false;
 
         if (res.result == 'success') {
           const data = res.data;
           if (data.length === 0) {
-            this.arrow = {
+            self.arrow = {
               show: true,
               type: 'warning',
               message: strings.noData,
             };
           } else {
             for (let item of data) {
-              this.num_3.x.push(item.timestamp);
-              this.num_3.y.push(item.num_3);
-              this.num_6.x.push(item.timestamp);
-              this.num_6.y.push(item.num_6);
-              this.num_9.x.push(item.timestamp);
-              this.num_9.y.push(item.num_9);
-              this.num_100.x.push(item.timestamp);
-              this.num_100.y.push(item.num_100);
+              self.num_3.x.push(item.timestamp);
+              self.num_3.y.push(item.num_3);
+              self.num_6.x.push(item.timestamp);
+              self.num_6.y.push(item.num_6);
+              self.num_9.x.push(item.timestamp);
+              self.num_9.y.push(item.num_9);
+              self.num_100.x.push(item.timestamp);
+              self.num_100.y.push(item.num_100);
             }
           }
         } else {
-          this.arrow = {
+          self.arrow = {
             show: true,
             type: 'danger',
             message: res.message,
           };
         }
       }, error => {
-        this.loading = false;
-        this.error = error;
-        this.arrow = {
+        self.loading = false;
+        self.error = error;
+        self.arrow = {
           show: true,
           type: 'danger',
           message: strings.unkbownServerError,
         };
       });
+
+    let timeoutDelay = 2 * 60 * 1000;
+    if (binSize === '1m') {
+      timeoutDelay = 30 * 1000;
+    } else if (binSize === '1h') {
+      timeoutDelay = 30 * 60 * 1000;
+    }
+    self.globalsService.chartTimeoutId = setTimeout(self.onSubmit, timeoutDelay);
   }
 }

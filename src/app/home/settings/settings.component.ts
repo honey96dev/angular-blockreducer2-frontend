@@ -5,7 +5,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import strings from '@core/strings';
 import {AuthenticationService, SettingsService} from "@app/_services";
 import {User} from "@app/_models";
-import {MyErrorStateMatcher} from "@app/_helpers/my-error.state-matcher";
 import {first} from "rxjs/operators";
 
 @Component({
@@ -19,13 +18,11 @@ export class SettingsComponent implements OnInit {
   passwordChangeForm: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
   passwordArrow = {
     show: false,
     type: '',
     message: '',
   };
-  matcher = new MyErrorStateMatcher();
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
@@ -43,8 +40,6 @@ export class SettingsComponent implements OnInit {
       confirmPassword: ['', Validators.required],
     });
 
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields

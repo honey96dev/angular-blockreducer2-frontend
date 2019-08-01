@@ -5,6 +5,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {GeneralChartDataService} from "@app/_services/general-chart-data.service";
 import {first} from "rxjs/operators";
+import {GlobalVariableService} from "@app/_services/global-variable.service";
+
+let self;
 
 @Component({
   selector: 'home-price-chart',
@@ -59,8 +62,10 @@ export class PriceChartComponent implements OnInit {
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
+                     private globalsService: GlobalVariableService,
                      private chartDataService: GeneralChartDataService) {
     titleService.setTitle(`${strings.priceChart}-${strings.siteName}`);
+    self = this;
   }
 
   ngOnInit() {
@@ -79,21 +84,25 @@ export class PriceChartComponent implements OnInit {
   }
 
   onSubmit() {
-    const self = this;
-    this.submitted = true;
-    this.loading = true;
-    this.arrow.show = false;
+    if (self.globalsService.chartTimeoutId) {
+      clearTimeout(self.globalsService.chartTimeoutId);
+    }
+    console.log('price-chart', new Date());
+
+    self.submitted = true;
+    self.loading = true;
+    self.arrow.show = false;
 
     const symbol = 'XBTUSD';
     const binSize = '5m';
     const datePipe = new DatePipe('en');
-    const startTime = datePipe.transform(this.f.startTime.value, 'yyyy-MM-dd');
-    const endTime = datePipe.transform(this.f.endTime.value, 'yyyy-MM-dd');
-    const timezone = this.f.timezone.value;
+    const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');
+    const endTime = datePipe.transform(self.f.endTime.value, 'yyyy-MM-dd');
+    const timezone = self.f.timezone.value;
 
-    this.priceData.x = [];
-    this.priceData.y = [];
-    this.chartDataService.price({
+    self.priceData.x = [];
+    self.priceData.y = [];
+    self.chartDataService.price({
       symbol,
       binSize,
       startTime,
@@ -102,41 +111,44 @@ export class PriceChartComponent implements OnInit {
     })
       .pipe(first())
       .subscribe(res => {
-        this.loading = false;
-        this.arrow.show = false;
+        self.loading = false;
+        self.arrow.show = false;
 
         if (res.result == 'success') {
           const data = res.data;
 
           if (data.length === 0) {
-            this.arrow = {
+            self.arrow = {
               show: true,
               type: 'warning',
               message: strings.noData,
             };
           } else {
             for (let item of data) {
-              this.priceData.x.push(item['timestamp']);
-              this.priceData.y.push(item['open']);
+              self.priceData.x.push(item['timestamp']);
+              self.priceData.y.push(item['open']);
             }
           }
         } else {
-          this.arrow = {
+          self.arrow = {
             show: true,
             type: 'danger',
             message: res.message,
           };
         }
       }, error => {
-        this.loading = false;
-        this.error = error;
-        this.arrow = {
+        self.loading = false;
+        self.error = error;
+        self.arrow = {
           show: true,
           type: 'danger',
           message: strings.unkbownServerError,
         };
-        this.priceData.x = [];
-        this.priceData.y = [];
+        self.priceData.x = [];
+        self.priceData.y = [];
       });
+
+    let timeoutDelay = 2 * 60 * 1000;
+    self.globalsService.chartTimeoutId = setTimeout(self.onSubmit, timeoutDelay);
   }
 }

@@ -1,0 +1,31 @@
+<div class="app-header white box-shadow">
+  <div class="navbar navbar-toggleable-sm flex-row align-items-center">
+    <div class="collapse navbar-collapse" id="collapse">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a id="pageTitle" class="nav-link" data-toggle="dropdown">
+            <span>{{strings.adminPanel}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div ui-view="" class="app-body" id="view">
+  <div class="padding">
+<!--    <mat-tab-group>-->
+<!--      <mat-tab label="First"> Content 1 </mat-tab>-->
+<!--      <mat-tab label="Second"> Content 2 </mat-tab>-->
+<!--      <mat-tab label="Third"> Content 3 </mat-tab>-->
+<!--    </mat-tab-group>-->
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link
+         routerLink="/app/admin/users"
+         routerLinkActive #rla="routerLinkActive"
+         [active]="rla.isActive">{{strings.userManagement}}</a>
+    </nav>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!--[matchValue]= "['password', 'confirmPassword']"-->
