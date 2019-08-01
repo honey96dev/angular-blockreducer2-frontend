@@ -20,6 +20,7 @@ import {VwapChartComponent} from "@app/home/general/vwap-chart/vwap-chart.compon
 import {SettingsComponent} from "@app/home/settings/settings.component";
 import {AdminPanelComponent} from "@app/home/admin/panel/admin-panel.component";
 import {AdminUsersComponent} from "@app/home/admin/users/admin-users.component";
+import {AdminGuard} from "@app/_helpers/admin.guard";
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
       {
         path: 'admin',
         component: AdminPanelComponent,
+        canActivate: [AuthGuard, AdminGuard],
         children: [
           {path: 'users', component: AdminUsersComponent, pathMatch: 'full'},
         ],
