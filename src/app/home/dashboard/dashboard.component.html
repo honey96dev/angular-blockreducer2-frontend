@@ -4,24 +4,51 @@
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item dropdown">
           <a id="pageTitle" class="nav-link" data-toggle="dropdown">
-            <span>{{pageTitle}}</span>
+            <span>{{strings.dashboard}}</span>
           </a>
         </li>
       </ul>
     </div>
-    <form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <ul class="nav navbar-nav ml-auto flex-row">
-        <li class="nav-item">
-          <!--<button type="submit" class="btn btn-fw primary" [disabled]="loading">{{strings.refresh}}</button>-->
-        </li>
-      </ul>
-    </form>
-
-    <!-- / navbar right -->
   </div>
 </div>
 <div ui-view="" class="app-body" id="view">
   <div class="padding">
-
+    <div class="align-content-center">
+      <form role="form" name="form" class="col-xl-4 col-lg-6 mx-auto" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div *ngIf="arrow.show" class="box-color pos-rlt" [ngClass]="arrow.type">
+          <span class="top b-primary"></span>
+          <div class="box-body">{{arrow.message}}</div>
+        </div>
+        <div>
+          <mat-form-field class="full-width-field">
+            <mat-label>{{strings.binSize}}</mat-label>
+            <mat-select formControlName="symbol">
+              <mat-option *ngFor="let symbol of symbols" [value]="symbol.value">
+                {{symbol.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+<!--        <mat-form-field class="full-width-field">-->
+<!--          <input matInput type="password" formControlName="currentPassword" placeholder="{{strings.currentPassword}}">-->
+<!--          <div *ngIf="submitted && f.currentPassword.errors" class="invalid-feedback">-->
+<!--            <div *ngIf="f.currentPassword.errors.required">{{strings.thisFieldIsRequired}}</div>-->
+<!--          </div>-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field class="full-width-field">-->
+<!--          <input matInput type="password" formControlName="newPassword" placeholder="{{strings.newPassword}}">-->
+<!--          <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">-->
+<!--            <div *ngIf="f.newPassword.errors.required">{{strings.thisFieldIsRequired}}</div>-->
+<!--          </div>-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field class="full-width-field">-->
+<!--          <input matInput type="password" formControlName="confirmPassword" placeholder="{{strings.confirmPassword}}">-->
+<!--          <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">-->
+<!--            <div *ngIf="f.confirmPassword.errors.matchValueError">{{strings.confirmPasswordIsNotMatchWithNewPassword}}</div>-->
+<!--          </div>-->
+<!--        </mat-form-field>-->
+        <button mat-raised-button color="accent" type="submit" [disabled]="loading">{{strings.change}}</button>
+      </form>
+    </div>
   </div>
 </div>

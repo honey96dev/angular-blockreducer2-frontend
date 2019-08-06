@@ -45,7 +45,7 @@ export class HomeLayoutComponent implements OnInit {
     // let data = Object.assign({}, homeLayout.user, {url: homeLayout.rout})
     homeLayout.ioClient.emit('user-timestamp', homeLayout.user);
     // homeLayout.ioClient.emit('user-timestamp', this.authenticationService.currentUserValue);
-    console.log('user-timestamp', JSON.stringify(homeLayout.user));
+    // console.log('user-timestamp', JSON.stringify(homeLayout.user));
   }
 
   onSignOut() {

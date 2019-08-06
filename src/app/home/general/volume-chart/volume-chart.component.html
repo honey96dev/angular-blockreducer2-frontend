@@ -51,7 +51,11 @@
         <button mat-raised-button color="accent" type="submit" [disabled]="loading">{{strings.submit}}</button>
       </div>
     </form>
+    <div *ngIf="arrow.show" class="box-color pos-rlt" [ngClass]="arrow.type">
+      <span class="top b-primary"></span>
+      <div class="box-body">{{arrow.message}}</div>
+    </div>
     <plotly-plot [data]="plotly1.data" [layout]="plotly1.layout" [useResizeHandler]="true"></plotly-plot>
-    <plotly-plot [data]="plotly2.data" [layout]="plotly2.layout" [useResizeHandler]="true"></plotly-plot>
+    <plotly-plot *ngIf="currentSymbol == 'XBTUSD'" [data]="plotly2.data" [layout]="plotly2.layout" [useResizeHandler]="true"></plotly-plot>
   </div>
 </div>

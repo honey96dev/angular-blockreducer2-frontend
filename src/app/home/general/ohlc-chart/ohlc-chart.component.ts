@@ -6,6 +6,7 @@ import {Title} from "@angular/platform-browser";
 import {GeneralChartDataService} from "@app/_services/general-chart-data.service";
 import {first} from "rxjs/operators";
 import {GlobalVariableService} from "@app/_services/global-variable.service";
+import {DashboardService} from "@app/_services/dashboard.service";
 
 let self;
 
@@ -59,6 +60,7 @@ export class OhlcChartComponent implements OnInit {
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
                      private globalsService: GlobalVariableService,
+                     private dashboardService: DashboardService,
                      private chartDataService: GeneralChartDataService) {
     titleService.setTitle(`${strings.ohlcChart}-${strings.siteName}`);
     self = this;
@@ -89,7 +91,7 @@ export class OhlcChartComponent implements OnInit {
     self.loading = true;
     self.arrow.show = false;
 
-    const symbol = 'XBTUSD';
+    const symbol = self.dashboardService.currentSymbol;
     const binSize = '5m';
     const datePipe = new DatePipe('en');
     const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');

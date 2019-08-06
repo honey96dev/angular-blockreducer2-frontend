@@ -14,7 +14,7 @@
 <div ui-view="" class="app-body" id="view">
   <div class="padding">
     <div class="align-content-center">
-      <form role="form" name="form" class="col-xl-4 col-lg-6 mx-auto" [formGroup]="passwordChangeForm" [matchValue]= "['newPassword', 'confirmPassword'] " (ngSubmit)="onChangePassword()">
+      <form role="form" name="form" class="col-xl-4 col-lg-6 mx-auto" [formGroup]="passwordChangeForm" [matchValue]= "['newPassword', 'confirmPassword']" (ngSubmit)="onChangePassword()">
         <div *ngIf="passwordArrow.show" class="box-color pos-rlt" [ngClass]="passwordArrow.type">
           <span class="top b-primary"></span>
           <div class="box-body">{{passwordArrow.message}}</div>

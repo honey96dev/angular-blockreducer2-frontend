@@ -3,8 +3,12 @@ const apis = {
     signIn: 'auth/sign-in',
     signUp: 'auth/sign-up',
   },
+  dashboard: {
+    currentSymbol: 'dashboard/current-symbol',
+  },
   general: {
     price: 'general/price',
+    volume0: 'general/volume0',
     volume1: 'general/volume1',
     volume2: 'general/volume2',
     ohlc: 'general/ohlc',

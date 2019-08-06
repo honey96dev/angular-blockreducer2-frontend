@@ -3,9 +3,8 @@ import {DatePipe} from "@angular/common";
 import strings from "@core/strings";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
-import {GeneralChartDataService} from "@app/_services/general-chart-data.service";
+import {GeneralChartDataService, GlobalVariableService, DashboardService} from "@app/_services";
 import {first} from "rxjs/operators";
-import {GlobalVariableService} from "@app/_services/global-variable.service";
 
 let self;
 @Component({
@@ -21,6 +20,7 @@ export class VolumeChartComponent implements OnInit {
     type: '',
     message: '',
   };
+  currentSymbol: string;
   loading = false;
   submitted = false;
   error = '';
@@ -126,12 +126,14 @@ export class VolumeChartComponent implements OnInit {
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
                      private globalsService: GlobalVariableService,
-                     private chartDataService: GeneralChartDataService) {
+                     private chartDataService: GeneralChartDataService,
+                     private dashboardService: DashboardService) {
     titleService.setTitle(`${strings.volumeChart}-${strings.siteName}`);
     self = this;
   }
 
   ngOnInit() {
+    this.currentSymbol = this.dashboardService.currentSymbol;
     this.form = this.formBuilder.group({
       binSize: [''],
       startTime: [''],
@@ -158,7 +160,7 @@ export class VolumeChartComponent implements OnInit {
     self.loading = true;
     self.arrow.show = false;
 
-    const symbol = 'XBTUSD';
+    const symbol = this.currentSymbol;
     const binSize = self.f.binSize.value;
     const datePipe = new DatePipe('en');
     const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');
@@ -172,113 +174,162 @@ export class VolumeChartComponent implements OnInit {
     self.volumeSumData.x = [];
     self.volumeSumData.y = [];
 
-    self.chartDataService.volume1({
-      symbol,
-      binSize,
-      startTime,
-      endTime,
-      timezone,
-    })
-      .pipe(first())
-      .subscribe(res => {
-        self.loading = false;
-        self.arrow.show = false;
+    if (symbol == 'XBTUSD') {
+      self.chartDataService.volume1({
+        symbol,
+        binSize,
+        startTime,
+        endTime,
+        timezone,
+      })
+        .pipe(first())
+        .subscribe(res => {
+          self.loading = false;
+          self.arrow.show = false;
 
-        if (res.result == 'success') {
-          const data = res.data;
-          if (data.length === 0) {
+          if (res.result == 'success') {
+            const data = res.data;
+            if (data.length === 0) {
+              self.arrow = {
+                show: true,
+                type: 'warning',
+                message: strings.noData,
+              };
+            } else {
+              for (let item of data) {
+                self.openData.x.push(item['timestamp']);
+                self.openData.y.push(item['open']);
+                self.volumeData.x.push(item['timestamp']);
+                self.volumeData.y.push(item['volume']);
+                self.volumeSumData.x.push(item['timestamp']);
+                self.volumeSumData.y.push(item['volumeSum']);
+              }
+            }
+          } else {
             self.arrow = {
               show: true,
-              type: 'warning',
-              message: strings.noData,
+              type: 'danger',
+              message: res.message,
             };
-          } else {
-            for (let item of data) {
-              self.openData.x.push(item['timestamp']);
-              self.openData.y.push(item['open']);
-              self.volumeData.x.push(item['timestamp']);
-              self.volumeData.y.push(item['volume']);
-              self.volumeSumData.x.push(item['timestamp']);
-              self.volumeSumData.y.push(item['volumeSum']);
-            }
           }
-        } else {
+        }, error => {
+          self.loading = false;
+          self.error = error;
           self.arrow = {
             show: true,
             type: 'danger',
-            message: res.message,
+            message: strings.unkbownServerError,
           };
-        }
-      }, error => {
-        self.loading = false;
-        self.error = error;
-        self.arrow = {
-          show: true,
-          type: 'danger',
-          message: strings.unkbownServerError,
-        };
-      });
+        });
 
-    self.open2Data.x = [];
-    self.open2Data.y = [];
-    self.openInterestData.x = [];
-    self.openInterestData.y = [];
-    self.openValueData.x = [];
-    self.openValueData.y = [];
+      self.open2Data.x = [];
+      self.open2Data.y = [];
+      self.openInterestData.x = [];
+      self.openInterestData.y = [];
+      self.openValueData.x = [];
+      self.openValueData.y = [];
 
-    self.chartDataService.volume2({
-      symbol,
-      binSize,
-      startTime,
-      endTime,
-      timezone,
-    })
-      .pipe(first())
-      .subscribe(res => {
-        self.loading = false;
-        self.arrow.show = false;
+      self.chartDataService.volume2({
+        symbol,
+        binSize,
+        startTime,
+        endTime,
+        timezone,
+      })
+        .pipe(first())
+        .subscribe(res => {
+          self.loading = false;
+          self.arrow.show = false;
 
-        if (res.result == 'success') {
-          const data = res.data;
-          if (data.length === 0) {
+          if (res.result == 'success') {
+            const data = res.data;
+            if (data.length === 0) {
+              self.arrow = {
+                show: true,
+                type: 'warning',
+                message: strings.noData,
+              };
+            } else {
+              for (let item of data) {
+                self.open2Data.x.push(item['timestamp']);
+                self.open2Data.y.push(item['open']);
+                self.openInterestData.x.push(item['timestamp']);
+                self.openInterestData.y.push(item['openInterest']);
+                self.openValueData.x.push(item['timestamp']);
+                self.openValueData.y.push(item['openValue']);
+              }
+            }
+          } else {
             self.arrow = {
               show: true,
-              type: 'warning',
-              message: strings.noData,
+              type: 'danger',
+              message: res.message,
             };
-          } else {
-            for (let item of data) {
-              self.open2Data.x.push(item['timestamp']);
-              self.open2Data.y.push(item['open']);
-              self.openInterestData.x.push(item['timestamp']);
-              self.openInterestData.y.push(item['openInterest']);
-              self.openValueData.x.push(item['timestamp']);
-              self.openValueData.y.push(item['openValue']);
-            }
           }
-        } else {
+        }, error => {
+          self.loading = false;
+          self.error = error;
           self.arrow = {
             show: true,
             type: 'danger',
-            message: res.message,
+            message: strings.unkbownServerError,
           };
-        }
-      }, error => {
-        self.loading = false;
-        self.error = error;
-        self.arrow = {
-          show: true,
-          type: 'danger',
-          message: strings.unkbownServerError,
-        };
-      });
+        });
 
-    let timeoutDelay = 2 * 60 * 1000;
-    if (binSize === '1m') {
-      timeoutDelay = 30 * 1000;
-    } else if (binSize === '1h') {
-      timeoutDelay = 30 * 60 * 1000;
+      let timeoutDelay = 2 * 60 * 1000;
+      if (binSize === '1m') {
+        timeoutDelay = 30 * 1000;
+      } else if (binSize === '1h') {
+        timeoutDelay = 30 * 60 * 1000;
+      }
+      self.globalsService.chartTimeoutId = setTimeout(self.onSubmit, timeoutDelay);
+    } else {
+      self.chartDataService.volume0({
+        symbol,
+        binSize,
+        startTime,
+        endTime,
+        timezone,
+      })
+        .pipe(first())
+        .subscribe(res => {
+          self.loading = false;
+          self.arrow.show = false;
+
+          if (res.result == 'success') {
+            const data = res.data;
+            if (data.length === 0) {
+              self.arrow = {
+                show: true,
+                type: 'warning',
+                message: strings.noData,
+              };
+            } else {
+              for (let item of data) {
+                self.openData.x.push(item['timestamp']);
+                self.openData.y.push(item['open']);
+                self.volumeData.x.push(item['timestamp']);
+                self.volumeData.y.push(item['volume']);
+                self.volumeSumData.x.push(item['timestamp']);
+                self.volumeSumData.y.push(item['volumeSum']);
+              }
+            }
+          } else {
+            self.arrow = {
+              show: true,
+              type: 'danger',
+              message: res.message,
+            };
+          }
+        }, error => {
+          self.loading = false;
+          self.error = error;
+          self.arrow = {
+            show: true,
+            type: 'danger',
+            message: strings.unkbownServerError,
+          };
+        });
     }
-    self.globalsService.chartTimeoutId = setTimeout(self.onSubmit, timeoutDelay);
   }
 }

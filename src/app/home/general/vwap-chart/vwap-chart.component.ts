@@ -3,9 +3,8 @@ import {DatePipe} from "@angular/common";
 import strings from "@core/strings";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
-import {GeneralChartDataService} from "@app/_services/general-chart-data.service";
+import {GlobalVariableService, GeneralChartDataService, DashboardService} from "@app/_services";
 import {first} from "rxjs/operators";
-import {GlobalVariableService} from "@app/_services/global-variable.service";
 
 let self;
 
@@ -22,6 +21,7 @@ export class VwapChartComponent implements OnInit {
     type: '',
     message: '',
   };
+  currentSymbol: string;
   loading = false;
   submitted = false;
   error = '';
@@ -88,12 +88,14 @@ export class VwapChartComponent implements OnInit {
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
                      private globalsService: GlobalVariableService,
-                     private chartDataService: GeneralChartDataService) {
+                     private chartDataService: GeneralChartDataService,
+                     private dashboardService: DashboardService) {
     titleService.setTitle(`${strings.volumeChart}-${strings.siteName}`);
     self = this;
   }
 
   ngOnInit() {
+    this.currentSymbol = this.dashboardService.currentSymbol;
     this.form = this.formBuilder.group({
       binSize: [''],
       startTime: [''],
@@ -102,6 +104,14 @@ export class VwapChartComponent implements OnInit {
     });
     this.f.binSize.setValue('5m');
     this.f.timezone.setValue(0);
+    if (this.currentSymbol != 'XBTUSD') {
+      this.arrow = {
+        show: true,
+        type: 'warning',
+        message: strings.noData,
+      }
+      return;
+    }
     this.onSubmit();
   }
 

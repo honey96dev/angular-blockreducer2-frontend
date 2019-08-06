@@ -6,6 +6,7 @@ import {Title} from "@angular/platform-browser";
 import {first} from "rxjs/operators";
 import {MarketSentimentChartDataService} from "@app/_services/market-sentiment-chart-data.service";
 import {GlobalVariableService} from "@app/_services/global-variable.service";
+import {DashboardService} from "@app/_services/dashboard.service";
 
 let self;
 
@@ -147,6 +148,7 @@ export class MarketLogarithmicChartComponent implements OnInit {
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
                      private globalsService: GlobalVariableService,
+                     private dashboardService: DashboardService,
                      private chartDataService: MarketSentimentChartDataService) {
     titleService.setTitle(`${strings.marketSentiment} ${strings.logarithmicChart}-${strings.siteName}`);
     self = this;
@@ -179,7 +181,7 @@ export class MarketLogarithmicChartComponent implements OnInit {
     self.loading = true;
     self.arrow.show = false;
 
-    const symbol = 'XBTUSD';
+    const symbol = self.dashboardService.currentSymbol;
     const binSize = self.f.binSize.value;
     const datePipe = new DatePipe('en');
     const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');

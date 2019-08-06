@@ -18,6 +18,13 @@ export class GeneralChartDataService {
       }));
   }
 
+  volume0(params) {
+    return this.http.get<any>(`${environment.apiUrl}${apis.general.volume0}`, {params})
+      .pipe(map(res => {
+        return res;
+      }));
+  }
+
   volume1(params) {
     return this.http.get<any>(`${environment.apiUrl}${apis.general.volume1}`, {params})
       .pipe(map(res => {

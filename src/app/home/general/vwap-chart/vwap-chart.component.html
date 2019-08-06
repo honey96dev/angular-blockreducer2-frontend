@@ -51,6 +51,6 @@
         <button mat-raised-button color="accent" type="submit" [disabled]="loading">{{strings.submit}}</button>
       </div>
     </form>
-    <plotly-plot [data]="plotly1.data" [layout]="plotly1.layout" [useResizeHandler]="true"></plotly-plot>
+    <plotly-plot *ngIf="currentSymbol == 'XBTUSD'" [data]="plotly1.data" [layout]="plotly1.layout" [useResizeHandler]="true"></plotly-plot>
   </div>
 </div>

@@ -6,6 +6,7 @@ import {Title} from "@angular/platform-browser";
 import {first} from "rxjs/operators";
 import {VolatilityChartDataService} from "@app/_services/volatility-chart-data.service";
 import {GlobalVariableService} from "@app/_services/global-variable.service";
+import {DashboardService} from "@app/_services/dashboard.service";
 
 let self;
 
@@ -27,7 +28,7 @@ export class VolatilityChartComponent implements OnInit {
   error = '';
 
   binSizes = [
-    {label: '1m', value: '1m'},
+    // {label: '1m', value: '1m'},
     {label: '5m', value: '5m'},
     {label: '1h', value: '1h'},
   ];
@@ -107,6 +108,7 @@ export class VolatilityChartComponent implements OnInit {
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
                      private globalsService: GlobalVariableService,
+                     private dashboardService: DashboardService,
                      private chartDataService: VolatilityChartDataService) {
     titleService.setTitle(`${strings.volatilityChart}-${strings.siteName}`);
     self = this;
@@ -139,7 +141,7 @@ export class VolatilityChartComponent implements OnInit {
     self.loading = true;
     self.arrow.show = false;
 
-    const symbol = 'XBTUSD';
+    const symbol = self.dashboardService.currentSymbol;
     const binSize = self.f.binSize.value;
     const datePipe = new DatePipe('en');
     const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');
