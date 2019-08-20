@@ -86,4 +86,8 @@ export default {
   edit: 'Edit',
   cancel: 'Cancel',
   thisEmailIsInvalid: 'This email is invalid',
+
+  chart: 'Chart',
+  recalculate: 'Calculate again',
+  calculateAgain: 'Calculate again',
 };

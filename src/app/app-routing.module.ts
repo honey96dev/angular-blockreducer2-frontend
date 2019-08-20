@@ -12,7 +12,7 @@ import {OhlcChartComponent} from "@app/home/general/ohlc-chart/ohlc-chart.compon
 import {MarketLinearChartComponent} from "@app/home/market-sentiment/linear/market-linear-chart.component";
 import {MarketLogarithmicChartComponent} from "@app/home/market-sentiment/logarithmic/market-logarithmic-chart.component";
 import {ExchangeInfoComponent} from "@app/home/exchange-info/exchange-info.component";
-import {VolatilityChartComponent} from "@app/home/volatility/volatility-chart.component";
+import {VolatilityChartComponent} from "@app/home/volatility/chart/volatility-chart.component";
 import {DeribitOption1ChartComponent} from "@app/home/deribit/option1-chart/deribit-option1-chart.component";
 import {DeribitOption2ChartComponent} from "@app/home/deribit/option2-chart/deribit-option2-chart.component";
 import {DeribitOption3ChartComponent} from "@app/home/deribit/option3-chart/deribit-option3-chart.component";
@@ -21,6 +21,7 @@ import {SettingsComponent} from "@app/home/settings/settings.component";
 import {AdminPanelComponent} from "@app/home/admin/panel/admin-panel.component";
 import {AdminUsersComponent} from "@app/home/admin/users/admin-users.component";
 import {AdminGuard} from "@app/_helpers/admin.guard";
+import {VolatilityRecalculateComponent} from "@app/home/volatility/recalculate/recalculate.component";
 
 const routes: Routes = [
   {
@@ -52,7 +53,8 @@ const routes: Routes = [
       {path: 'general/volume-chart', component: VolumeChartComponent, pathMatch: 'full'},
       {path: 'general/vwap-chart', component: VwapChartComponent, pathMatch: 'full'},
       {path: 'general/ohlc-chart', component: OhlcChartComponent, pathMatch: 'full'},
-      {path: 'volatility-chart', component: VolatilityChartComponent, pathMatch: 'full'},
+      {path: 'volatility/chart', component: VolatilityChartComponent, pathMatch: 'full'},
+      {path: 'volatility/recalculate', component: VolatilityRecalculateComponent, pathMatch: 'full'},
       {path: 'market-sentiment/linear', component: MarketLinearChartComponent, pathMatch: 'full'},
       {path: 'market-sentiment/logarithmic', component: MarketLogarithmicChartComponent, pathMatch: 'full'},
       {path: 'exchange-info', component: ExchangeInfoComponent, pathMatch: 'full'},

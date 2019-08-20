@@ -16,6 +16,7 @@ const apis = {
   volatility: {
     real: 'volatility/real',
     estimate: 'volatility/estimate',
+    recalculate: 'volatility/recalculate',
   },
   marketSentiment: {
     one: 'market-sentiment/one',

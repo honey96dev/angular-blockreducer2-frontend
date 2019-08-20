@@ -41,7 +41,7 @@ import {DashboardComponent} from './home/dashboard/dashboard.component';
 import {PriceChartComponent} from './home/general/price-chart/price-chart.component';
 import {VolumeChartComponent} from './home/general/volume-chart/volume-chart.component';
 import {OhlcChartComponent} from "@app/home/general/ohlc-chart/ohlc-chart.component";
-import {VolatilityChartComponent} from "@app/home/volatility/volatility-chart.component";
+import {VolatilityChartComponent} from "@app/home/volatility/chart/volatility-chart.component";
 import {MarketLinearChartComponent} from "@app/home/market-sentiment/linear/market-linear-chart.component";
 import {MarketLogarithmicChartComponent} from "@app/home/market-sentiment/logarithmic/market-logarithmic-chart.component";
 import {ExchangeInfoComponent} from "@app/home/exchange-info/exchange-info.component";
@@ -58,6 +58,7 @@ import {
   AdminUsersEditDialog
 } from "@app/home/admin/users/admin-users.component";
 import {AdminPanelComponent} from "@app/home/admin/panel/admin-panel.component";
+import {VolatilityRecalculateComponent} from "@app/home/volatility/recalculate/recalculate.component";
 
 export const MY_FORMATS = {
   parse: {
@@ -86,6 +87,7 @@ export const MY_FORMATS = {
     VwapChartComponent,
     OhlcChartComponent,
     VolatilityChartComponent,
+    VolatilityRecalculateComponent,
     MarketLinearChartComponent,
     MarketLogarithmicChartComponent,
     ExchangeInfoComponent,

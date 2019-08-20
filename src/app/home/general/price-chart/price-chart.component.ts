@@ -26,6 +26,15 @@ export class PriceChartComponent implements OnInit {
   loading = false;
   submitted = false;
   error = '';
+
+  symbols = [
+    {label: 'Bitcoin', value: 'XBTUSD'},
+    {label: 'Ethereum', value: 'tETHUSD'},
+    {label: 'Bitcoin Cash', value: 'tBABUSD'},
+    {label: 'EOS', value: 'tEOSUSD'},
+    {label: 'Litecoin', value: 'tLTCUSD'},
+    {label: 'Bitcoin SV', value: 'tBSVUSD'},
+  ];
   symbol = this.dashboardService.currentSymbol;
   priceData = {
     x: [],
@@ -73,10 +82,12 @@ export class PriceChartComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      symbol: [''],
       startTime: [''],
       endTime: [''],
       timezone: ['', Validators.required],
     });
+    this.f.symbol.setValue(this.symbol);
     this.f.timezone.setValue(0);
     this.onSubmit();
   }
@@ -96,7 +107,8 @@ export class PriceChartComponent implements OnInit {
     self.loading = true;
     self.arrow.show = false;
 
-    const symbol = self.dashboardService.currentSymbol;
+    const symbol = self.f.symbol.value;
+    // const symbol = self.symbol;
     const binSize = '5m';
     const datePipe = new DatePipe('en');
     const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');

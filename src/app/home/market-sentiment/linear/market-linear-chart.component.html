@@ -19,6 +19,16 @@
     <form name="form" class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="col-lg-2 col-md-6">
         <mat-form-field class="full-width-field">
+          <mat-label>{{strings.symbol}}</mat-label>
+          <mat-select formControlName="symbol">
+            <mat-option *ngFor="let symbol of symbols" [value]="symbol.value">
+              {{symbol.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-2 col-md-6">
+        <mat-form-field class="full-width-field">
           <mat-label>{{strings.binSize}}</mat-label>
           <mat-select formControlName="binSize">
             <mat-option *ngFor="let binSize of binSizes" [value]="binSize.value">
@@ -27,14 +37,14 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-2 col-md-6">
         <mat-form-field class="full-width-field">
           <input matInput [matDatepicker]="startDatePicker" formControlName="startTime" placeholder="{{strings.startTime}}">
           <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #startDatePicker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-2 col-md-6">
         <mat-form-field class="full-width-field">
           <input matInput [matDatepicker]="endDatePicker" formControlName="endTime" placeholder="{{strings.endTime}}">
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>

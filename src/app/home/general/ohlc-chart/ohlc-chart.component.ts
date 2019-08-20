@@ -23,21 +23,43 @@ export class OhlcChartComponent implements OnInit {
     type: '',
     message: '',
   };
+  symbol = this.dashboardService.currentSymbol;
   loading = false;
   submitted = false;
   error = '';
-  priceData = {
+
+  symbols = [
+    {label: 'Bitcoin', value: 'XBTUSD'},
+    {label: 'Ethereum', value: 'tETHUSD'},
+    {label: 'Bitcoin Cash', value: 'tBABUSD'},
+    {label: 'EOS', value: 'tEOSUSD'},
+    {label: 'Litecoin', value: 'tLTCUSD'},
+    {label: 'Bitcoin SV', value: 'tBSVUSD'},
+  ];
+  openData = {
+    x: [],
+    y: [],
+    type: 'scatter',
+    opacity: 0.2,
+  };
+  ohlcData = {
     x: [],
     open: [],
     high: [],
     low: [],
     close: [],
     type: 'ohlc',
+    mode: 'lines+points',
+    marker: {
+      line: {
+        width: 2,
+      }
+    },
   };
   graph = {
-    data: [this.priceData],
+    data: [this.openData, this.ohlcData],
     // data: [
-    //   { x: this.priceData.x, y: this.priceData.y, type: 'scatter', mode: 'lines+points', marker: {color: 'red'} },
+    //   { x: this.ohlcData.x, y: this.ohlcData.y, type: 'scatter', mode: 'lines+points', marker: {color: 'red'} },
     // ],
     layout: {
       height: 850,
@@ -68,10 +90,12 @@ export class OhlcChartComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      symbol: [''],
       startTime: [''],
       endTime: [''],
       timezone: ['', Validators.required],
     });
+    this.f.symbol.setValue(this.symbol);
     this.f.timezone.setValue(0);
     this.onSubmit();
   }
@@ -91,18 +115,21 @@ export class OhlcChartComponent implements OnInit {
     self.loading = true;
     self.arrow.show = false;
 
-    const symbol = self.dashboardService.currentSymbol;
+    const symbol = self.f.symbol.value;
+    // const symbol = self.symbol;
     const binSize = '5m';
     const datePipe = new DatePipe('en');
     const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');
     const endTime = datePipe.transform(self.f.endTime.value, 'yyyy-MM-dd');
     const timezone = self.f.timezone.value;
 
-    self.priceData.x = [];
-    self.priceData.open = [];
-    self.priceData.high = [];
-    self.priceData.low = [];
-    self.priceData.close = [];
+    self.openData.x = [];
+    self.openData.open = [];
+    self.ohlcData.x = [];
+    self.ohlcData.open = [];
+    self.ohlcData.high = [];
+    self.ohlcData.low = [];
+    self.ohlcData.close = [];
 
     self.chartDataService.ohlc({
       symbol,
@@ -126,11 +153,13 @@ export class OhlcChartComponent implements OnInit {
             };
           } else {
             for (let item of data) {
-              self.priceData.x.push(item['timestamp']);
-              self.priceData.open.push(item['open']);
-              self.priceData.high.push(item['high']);
-              self.priceData.low.push(item['low']);
-              self.priceData.close.push(item['close']);
+              self.openData.x.push(item['timestamp']);
+              self.openData.y.push(item['open']);
+              self.ohlcData.x.push(item['timestamp']);
+              self.ohlcData.open.push(item['open']);
+              self.ohlcData.high.push(item['high']);
+              self.ohlcData.low.push(item['low']);
+              self.ohlcData.close.push(item['close']);
             }
           }
         } else {
@@ -148,11 +177,11 @@ export class OhlcChartComponent implements OnInit {
           type: 'danger',
           message: strings.unkbownServerError,
         };
-        self.priceData.x = [];
-        self.priceData.open = [];
-        self.priceData.high = [];
-        self.priceData.low = [];
-        self.priceData.close = [];
+        self.ohlcData.x = [];
+        self.ohlcData.open = [];
+        self.ohlcData.high = [];
+        self.ohlcData.low = [];
+        self.ohlcData.close = [];
       });
 
     let timeoutDelay = 2 * 60 * 1000;

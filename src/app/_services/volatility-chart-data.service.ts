@@ -18,8 +18,8 @@ export class VolatilityChartDataService {
       }));
   }
 
-  collection(binSize, params) {
-    return this.http.get<any>(`${environment.apiUrl}${apis.marketSentiment.collection}/${binSize}`, {params})
+  recalculate(binSize, params) {
+    return this.http.post<any>(`${environment.apiUrl}${apis.volatility.recalculate}/${binSize}`, params)
       .pipe(map(res => {
         return res;
       }));

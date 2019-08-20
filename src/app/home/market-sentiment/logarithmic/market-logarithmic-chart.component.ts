@@ -23,9 +23,19 @@ export class MarketLogarithmicChartComponent implements OnInit {
     type: '',
     message: '',
   };
+  symbol = this.dashboardService.currentSymbol;
   loading = false;
   submitted = false;
   error = '';
+
+  symbols = [
+    {label: 'Bitcoin', value: 'XBTUSD'},
+    {label: 'Ethereum', value: 'tETHUSD'},
+    {label: 'Bitcoin Cash', value: 'tBABUSD'},
+    {label: 'EOS', value: 'tEOSUSD'},
+    {label: 'Litecoin', value: 'tLTCUSD'},
+    {label: 'Bitcoin SV', value: 'tBSVUSD'},
+  ];
 
   binSizes = [
     {label: '1m', value: '1m'},
@@ -156,11 +166,13 @@ export class MarketLogarithmicChartComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      symbol: [''],
       binSize: [''],
       startTime: [''],
       endTime: [''],
       timezone: ['', Validators.required],
     });
+    this.f.symbol.setValue(this.symbol);
     this.f.binSize.setValue('5m');
     this.f.timezone.setValue(0);
     this.onSubmit();
@@ -181,7 +193,8 @@ export class MarketLogarithmicChartComponent implements OnInit {
     self.loading = true;
     self.arrow.show = false;
 
-    const symbol = self.dashboardService.currentSymbol;
+    const symbol = self.f.symbol.value;
+    // const symbol = self.symbol;
     const binSize = self.f.binSize.value;
     const datePipe = new DatePipe('en');
     const startTime = datePipe.transform(self.f.startTime.value, 'yyyy-MM-dd');

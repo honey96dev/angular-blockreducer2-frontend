@@ -93,8 +93,32 @@
             </ul>
           </li>
 
-          <li>
-            <a routerLink="/app/volatility-chart">
+          <li *ngIf="user['type'] === 'admin'">
+            <a>
+              <span class="nav-caret">
+                <i class="fa fa-caret-down"></i>
+              </span>
+              <span class="nav-icon">
+                <i class="fa fa-cloud"></i>
+              </span>
+              <span class="nav-text">{{strings.volatilityChart}}</span>
+            </a>
+            <ul class="nav-sub">
+              <li>
+                <a routerLink="/app/volatility/chart">
+                  <span class="nav-text">{{strings.chart}}</span>
+                </a>
+              </li>
+              <li>
+                <a routerLink="/app/volatility/recalculate">
+                  <span class="nav-text">{{strings.recalculate}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li *ngIf="user['type'] !== 'admin'">
+            <a routerLink="/app/volatility/chart">
               <span class="nav-icon">
                 <i class="fa fa-cloud">
                 </i>
