@@ -106,7 +106,7 @@
             <div *ngFor="let timestamp of timestamps; let i = index" [style.background-color]="!!chartData[timestamp] && !!chartData[timestamp][price] ? chartData[timestamp][price]['style'] : 'transparent'">
 <!--              {{chartData[timestamp] ? timestamp : ''}}-->
               {{!!chartData[timestamp] && !!chartData[timestamp][price] ? (!!chartData[timestamp][price]['Buy'] ? chartData[timestamp][price]['Buy'] : 0) : ''}}
-              {{!!chartData[timestamp] && !!chartData[timestamp][price] ? '*' : ''}}
+              {{!!chartData[timestamp] && !!chartData[timestamp][price] ? '×' : ''}}
               {{!!chartData[timestamp] && !!chartData[timestamp][price] ? (!!chartData[timestamp][price]['Sell'] ? chartData[timestamp][price]['Sell'] : 0) : ''}}
             </div>
           </div>

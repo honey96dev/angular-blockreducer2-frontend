@@ -82,7 +82,7 @@ export class FootprintChartComponent implements OnInit {
       showColorPicker: [''],
     });
     this.f.symbol.setValue(this.symbol);
-    this.f.endTime.setValue('2019-08-27');
+    // this.f.endTime.setValue('2019-08-27');
     this.f.startPrice.setValue(9500);
     this.f.endPrice.setValue(10500);
     this.f.step.setValue(3);
