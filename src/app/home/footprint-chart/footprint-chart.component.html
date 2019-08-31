@@ -98,13 +98,13 @@
       <perfect-scrollbar #scrollable track="all">
         <div class="footprint-chart-table">
           <div class="footprint-chart-row">
-            <div></div>
-            <div *ngFor="let timestamp of timestamps1; let i = index">{{timestamp}}</div>
+            <div [style.width]="f.symbol.value === 'XBTUSD' ? footprintCellWidth4XBTUSD : ''"></div>
+            <div [style.width]="f.symbol.value === 'XBTUSD' ? footprintCellWidth4XBTUSD : ''" *ngFor="let timestamp of timestamps1; let i = index">{{timestamp}}</div>
           </div>
           <div *ngFor="let price of prices; let i = index;" class="footprint-chart-row">
-            <div>{{price}}</div>
-            <div *ngFor="let timestamp of timestamps; let i = index" [style.background-color]="!!chartData[timestamp] && !!chartData[timestamp][price] ? chartData[timestamp][price]['style'] : 'transparent'">
-<!--              {{chartData[timestamp] ? timestamp : ''}}-->
+            <div [style.width]="f.symbol.value === 'XBTUSD' ? footprintCellWidth4XBTUSD : ''">{{price}}</div>
+<!--            <div style="position: absolute; left: 0;" [style]="top: (i * 14);">{{price}}</div>-->
+            <div *ngFor="let timestamp of timestamps; let i = index" [style.width]="f.symbol.value === 'XBTUSD' ? footprintCellWidth4XBTUSD : ''" [style.background-color]="!!chartData[timestamp] && !!chartData[timestamp][price] ? chartData[timestamp][price]['style'] : 'transparent'">
               {{!!chartData[timestamp] && !!chartData[timestamp][price] ? (!!chartData[timestamp][price]['Buy'] ? chartData[timestamp][price]['Buy'] : 0) : ''}}
               {{!!chartData[timestamp] && !!chartData[timestamp][price] ? '×' : ''}}
               {{!!chartData[timestamp] && !!chartData[timestamp][price] ? (!!chartData[timestamp][price]['Sell'] ? chartData[timestamp][price]['Sell'] : 0) : ''}}
