@@ -30,6 +30,9 @@ const apis = {
     instruments: 'deribit/instruments',
     data: 'deribit/data',
   },
+  footprint: {
+    index: 'footprint',
+  },
   settings: {
     password: 'settings/password',
   },

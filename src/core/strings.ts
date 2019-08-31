@@ -30,6 +30,7 @@ export default {
   dashboard: 'Dashboard',
   general: 'General',
   priceChart: 'Price chart',
+  tradingview: 'Tradingview',
   volumeChart: 'Volume chart',
   vwapChart: 'VWAP chart',
   currentTradeChart: 'Current trade chart',
@@ -46,6 +47,7 @@ export default {
   option1: 'Option1',
   option2: 'Option2',
   option3: 'Option3',
+  footprint: 'Footprint',
   settings: 'Settings',
   builtWithCryptocurrency: 'Built with Crytocurrency',
 
@@ -90,4 +92,13 @@ export default {
   chart: 'Chart',
   recalculate: 'Calculate again',
   calculateAgain: 'Calculate again',
+
+  startPrice: 'Start Price',
+  endPrice: 'End Price',
+  step: 'Step',
+  colorPicker: 'Color Picker',
+  range: 'Range',
+  color: 'Color',
+  buyGreaterThanSell: 'Buy > Sell',
+  sellGreaterThanBuy: 'Sell > Buy',
 };

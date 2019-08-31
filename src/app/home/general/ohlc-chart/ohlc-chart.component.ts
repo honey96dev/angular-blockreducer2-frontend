@@ -37,18 +37,20 @@ export class OhlcChartComponent implements OnInit {
     {label: 'Bitcoin SV', value: 'tBSVUSD'},
   ];
   openData = {
+    name: 'Open',
     x: [],
     y: [],
     type: 'scatter',
     opacity: 0.2,
   };
   ohlcData = {
+    name: 'Candlestick',
     x: [],
     open: [],
     high: [],
     low: [],
     close: [],
-    type: 'ohlc',
+    type: 'candlestick',
     mode: 'lines+points',
     marker: {
       line: {

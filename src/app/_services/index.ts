@@ -6,4 +6,5 @@ export * from './volatility-chart-data.service';
 export * from './market-sentiment-chart-data.service';
 export * from './exchange-info-data.service';
 export * from './deribit-chart-data.service';
+export * from './footprint-data.service';
 export * from './settings.service';

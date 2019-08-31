@@ -21,6 +21,9 @@ import {
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import {PlotlyModule} from 'angular-plotly.js';
@@ -28,7 +31,7 @@ import {PlotlyModule} from 'angular-plotly.js';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 import {AppRoutingModule} from './app-routing.module';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JwtInterceptor, ErrorInterceptor} from './_helpers';
 import {MatchValueDirective} from "@app/_helpers/match-value.directive";
 
@@ -59,6 +62,9 @@ import {
 } from "@app/home/admin/users/admin-users.component";
 import {AdminPanelComponent} from "@app/home/admin/panel/admin-panel.component";
 import {VolatilityRecalculateComponent} from "@app/home/volatility/recalculate/recalculate.component";
+import {FootprintChartComponent} from "@app/home/footprint-chart/footprint-chart.component";
+import {TradingviewComponent} from "@app/home/general/tradingview/tradingview.component";
+import {ColorPickerModule} from "ngx-color-picker";
 
 export const MY_FORMATS = {
   parse: {
@@ -72,6 +78,10 @@ export const MY_FORMATS = {
   },
 };
 
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  wheelPropagation: true
+};
+
 @NgModule({
   declarations: [
     CheckForceValidator,
@@ -83,6 +93,7 @@ export const MY_FORMATS = {
     HomeLayoutComponent,
     DashboardComponent,
     PriceChartComponent,
+    TradingviewComponent,
     VolumeChartComponent,
     VwapChartComponent,
     OhlcChartComponent,
@@ -94,6 +105,7 @@ export const MY_FORMATS = {
     DeribitOption1ChartComponent,
     DeribitOption2ChartComponent,
     DeribitOption3ChartComponent,
+    FootprintChartComponent,
     SettingsComponent,
     AdminPanelComponent,
     AdminUsersComponent,
@@ -121,6 +133,9 @@ export const MY_FORMATS = {
     MatIconModule,
     MatTabsModule,
     MatDialogModule,
+    PerfectScrollbarModule,
+    ColorPickerModule,
+    FormsModule,
   ],
   providers: [
     Title,
@@ -134,6 +149,11 @@ export const MY_FORMATS = {
     MatDatepickerModule,
 
     GlobalVariableService,
+
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    },
   ],
   bootstrap: [
     AppComponent,

@@ -22,6 +22,8 @@ import {AdminPanelComponent} from "@app/home/admin/panel/admin-panel.component";
 import {AdminUsersComponent} from "@app/home/admin/users/admin-users.component";
 import {AdminGuard} from "@app/_helpers/admin.guard";
 import {VolatilityRecalculateComponent} from "@app/home/volatility/recalculate/recalculate.component";
+import {FootprintChartComponent} from "@app/home/footprint-chart/footprint-chart.component";
+import {TradingviewComponent} from "@app/home/general/tradingview/tradingview.component";
 
 const routes: Routes = [
   {
@@ -50,6 +52,7 @@ const routes: Routes = [
       },
       {path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},
       {path: 'general/price-chart', component: PriceChartComponent, pathMatch: 'full'},
+      {path: 'general/tradingview', component: TradingviewComponent, pathMatch: 'full'},
       {path: 'general/volume-chart', component: VolumeChartComponent, pathMatch: 'full'},
       {path: 'general/vwap-chart', component: VwapChartComponent, pathMatch: 'full'},
       {path: 'general/ohlc-chart', component: OhlcChartComponent, pathMatch: 'full'},
@@ -61,6 +64,7 @@ const routes: Routes = [
       {path: 'deribit/option1', component: DeribitOption1ChartComponent, pathMatch: 'full'},
       {path: 'deribit/option2', component: DeribitOption2ChartComponent, pathMatch: 'full'},
       {path: 'deribit/option3', component: DeribitOption3ChartComponent, pathMatch: 'full'},
+      {path: 'footprint', component: FootprintChartComponent, pathMatch: 'full'},
       {path: 'settings', component: SettingsComponent, pathMatch: 'full'},
     ],
   },

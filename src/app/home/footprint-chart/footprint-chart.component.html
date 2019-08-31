@@ -1,0 +1,117 @@
+<div class="app-header white box-shadow">
+  <div class="navbar navbar-toggleable-sm flex-row align-items-center">
+    <a data-toggle="modal" data-target="#aside" class="hidden-lg-up mr-3">
+      <i class="material-icons"></i>
+    </a>
+    <div class="collapse navbar-collapse" id="collapse">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a id="pageTitle" class="nav-link" data-toggle="dropdown">
+            <span>{{strings.footprint}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div ui-view="" class="app-body" id="view">
+  <div class="padding2">
+    <form name="form" class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="col-lg-2 col-md-6">
+        <mat-form-field class="full-width-field">
+          <mat-label>{{strings.binSize}}</mat-label>
+          <mat-select formControlName="symbol">
+            <mat-option *ngFor="let symbol of symbols" [value]="symbol.value">
+              {{symbol.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-2 col-md-6">
+        <mat-form-field class="full-width-field">
+          <input matInput [matDatepicker]="startDatePicker" formControlName="startTime" placeholder="{{strings.startTime}}">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-2 col-md-6">
+        <mat-form-field class="full-width-field">
+          <input matInput [matDatepicker]="endDatePicker" formControlName="endTime" placeholder="{{strings.endTime}}">
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+          <!--          <label>{{strings.endTime}}</label>-->
+        </mat-form-field>
+      </div>
+      <div class="col-lg-1 col-md-6">
+        <mat-form-field class="full-width-field">
+          <input matInput type="number" placeholder="{{strings.startPrice}}" formControlName="startPrice">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-1 col-md-6">
+        <mat-form-field class="full-width-field">
+          <input matInput type="number" placeholder="{{strings.endPrice}}" formControlName="endPrice">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-1 col-md-6">
+        <mat-form-field class="full-width-field">
+          <input matInput type="number" placeholder="{{strings.step}}" formControlName="step">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-1 col-md-6">
+        <button mat-raised-button color="accent" type="submit" [disabled]="loading">{{strings.submit}}</button>
+      </div>
+      <div class="col-lg-1 col-md-6 color-picker-check">
+        <mat-checkbox color="primary" formControlName="showColorPicker" readonly class="color-picker-input">{{strings.colorPicker}}</mat-checkbox>
+<!--        <input type="checkbox" formControlName="showColorPicker">{{strings.colorPicker}}-->
+      </div>
+    </form>
+    <div *ngIf="f.showColorPicker.value" class="color-picker-sec row">
+      <div class="col-md-6">
+        <div class="full-width text-align-center h6">
+          {{strings.buyGreaterThanSell}}
+        </div>
+        <div *ngFor="let item of color1" class="full-width row mb-3">
+          <div class="col-md-3"></div>
+          <div class="col-md-2">{{strings.range}}</div>
+          <input class="col-md-2 range-input" type="number" placeholder="{{strings.range}}" [(ngModel)]="item['range']">
+          <div class="col-md-2">{{strings.color}}</div>
+          <input class="col-md-3" [(colorPicker)]="item['color']" [style.background]="item['color']" [cpOutputFormat]="'rgba'" [cpPosition]="colorPickerPosition"/>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="full-width text-align-center h6">
+          {{strings.sellGreaterThanBuy}}
+        </div>
+        <div *ngFor="let item of color2" class="full-width row mb-3">
+          <div class="col-md-2">{{strings.range}}</div>
+          <input class="col-md-2 range-input" type="number" placeholder="{{strings.range}}" [(ngModel)]="item['range']">
+          <div class="col-md-2">{{strings.color}}</div>
+          <input class="col-md-3" [(colorPicker)]="item['color']" [style.background]="item['color']" [cpOutputFormat]="'rgba'" [cpPosition]="colorPickerPosition"/>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="arrow.show" class="box-color pos-rlt" [ngClass]="arrow.type">
+      <span class="top b-primary"></span>
+      <div class="box-body">{{arrow.message}}</div>
+    </div>
+    <div id="scroll">
+      <perfect-scrollbar #scrollable track="all">
+        <div class="footprint-chart-table">
+          <div class="footprint-chart-row">
+            <div></div>
+            <div *ngFor="let timestamp of timestamps1; let i = index">{{timestamp}}</div>
+          </div>
+          <div *ngFor="let price of prices; let i = index;" class="footprint-chart-row">
+            <div>{{price}}</div>
+            <div *ngFor="let timestamp of timestamps; let i = index" [style.background-color]="!!chartData[timestamp] && !!chartData[timestamp][price] ? chartData[timestamp][price]['style'] : 'transparent'">
+<!--              {{chartData[timestamp] ? timestamp : ''}}-->
+              {{!!chartData[timestamp] && !!chartData[timestamp][price] ? (!!chartData[timestamp][price]['Buy'] ? chartData[timestamp][price]['Buy'] : 0) : ''}}
+              {{!!chartData[timestamp] && !!chartData[timestamp][price] ? '*' : ''}}
+              {{!!chartData[timestamp] && !!chartData[timestamp][price] ? (!!chartData[timestamp][price]['Sell'] ? chartData[timestamp][price]['Sell'] : 0) : ''}}
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>
